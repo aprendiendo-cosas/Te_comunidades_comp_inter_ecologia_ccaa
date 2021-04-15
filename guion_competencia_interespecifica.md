@@ -18,7 +18,7 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 
    
 
- ## Contenidos
+ ## Contenidos. Breve introducción a las interacciones ecológicas
 Antes de hablar de competencia interespecífica, pongamos en contexto este concepto. 
 
 La competencia interespecífica es uno de los muchos tipos de interacciones que ocurren en las comunidades ecológicas. A través de estas interacciones se produce la transferencia de materia y energía entre los distintos niveles en los que se organiza la vida en la Tierra. Esto último cobrará más sentido cuando estudiemos los ciclos biogeoquímicos. Las relaciones o interacciones son fundamentales porque su abundancia y configuración contribuye a explicar ciertas propiedades de los ecosistemas:
@@ -29,10 +29,26 @@ La competencia interespecífica es uno de los muchos tipos de interacciones que 
 
 En las próximas sesiones analizaremos los distintos tipos de interacciones ecológicas que se han descrito. La siguiente tabla muestra dichas interacciones:
 
-![interacciones]()
+
+
+![interacciones](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/images/tipos_interacciones.png)
 
 
 
+## Competencia interespecífica 
+
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://aprendiendo-cosas.github.io/Te_comp_inter_ecologia_ccaa/presentacion/comp_inter.html) página. 
+
++ La competencia interespecífica consiste en la interacción entre dos o más especies que usan los mismos tipos de recursos.
++ Tipos de competencia:
+  + Interferencia.
+  + Explotación.
++ Efectos de la competencia interespecífica a escala de individuo y de población.
++ Modelización del proceso usando según Lotka y Volterra.
++ Factores que limitan la competencia interespecífica en la naturaleza.
 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/competencia.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://aprendiendo-cosas.github.io/Te_comp_inter_ecologia_ccaa/presentacion/comp_inter.html) página. 
+A continuación puedes ver el vídeo de la sesión.
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EB8dz0eWA9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

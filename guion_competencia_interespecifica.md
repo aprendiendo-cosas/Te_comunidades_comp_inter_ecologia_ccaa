@@ -47,8 +47,25 @@ A lo largo de la sesión se describen los siguientes elementos, que se pueden ob
 + Modelización del proceso usando según Lotka y Volterra.
 + Factores que limitan la competencia interespecífica en la naturaleza.
 
-
 A continuación puedes ver el vídeo de la sesión.
 
 
+
+*Curso 2020-2021*
+
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/EB8dz0eWA9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+*Curso 2019-2020*
+
+**Vídeo 1**
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VXQx5w1LoTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+**Vídeo 2**
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CzvOxSdFmuY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

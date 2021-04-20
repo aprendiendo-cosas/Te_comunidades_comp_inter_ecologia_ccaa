@@ -6,7 +6,7 @@
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
-
+![portada](https://github.com/aprendiendo-cosas/Te_depredacion_ecologia_ccaa/raw/main/imagenes/competencia_inter.png)
 
 ## Objetivos 
 

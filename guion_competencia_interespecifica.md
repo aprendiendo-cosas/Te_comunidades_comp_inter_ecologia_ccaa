@@ -6,7 +6,7 @@
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
-![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/imagenes/competencia_inter.png)
+![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/imagenes/competencia_inter.png)
 
 ## Objetivos 
 
@@ -23,21 +23,21 @@ Antes de hablar de competencia interespecífica, pongamos en contexto este conce
 
 La competencia interespecífica es uno de los muchos tipos de interacciones que ocurren en las comunidades ecológicas. A través de estas interacciones se produce la transferencia de materia y energía entre los distintos niveles en los que se organiza la vida en la Tierra. Esto último cobrará más sentido cuando estudiemos los ciclos biogeoquímicos. Las relaciones o interacciones son fundamentales porque su abundancia y configuración contribuye a explicar ciertas propiedades de los ecosistemas:
 
-+ Los sistemas con más interacciones son más estables. Es decir, se ven menos afectados por las condiciones ambientales externas. [Este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/biblio/interacciones_estabilidad_1.pdf) artículo describe muy bien esta afirmación. 
-+ También se ha observado que en las comunidades en las que hay más interacciones, hay más productividad. [Este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/biblio/interacciones_estabilidad_2.pdf) artículo lo resume bien. 
-+ Por último sabemos que el equilibrio en el tipo de interacciones (la llamada equitatividad de interacciones) genera más estabilidad en el ecosistema. De nuevo, [aquí](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/biblio/interacciones_estabilidad_3.pdf) tienes un artículo que describe esta afirmación. 
++ Los sistemas con más interacciones son más estables. Es decir, se ven menos afectados por las condiciones ambientales externas. [Este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/biblio/interacciones_estabilidad_1.pdf) artículo describe muy bien esta afirmación. 
++ También se ha observado que en las comunidades en las que hay más interacciones, hay más productividad. [Este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/biblio/interacciones_estabilidad_2.pdf) artículo lo resume bien. 
++ Por último sabemos que el equilibrio en el tipo de interacciones (la llamada equitatividad de interacciones) genera más estabilidad en el ecosistema. De nuevo, [aquí](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/biblio/interacciones_estabilidad_3.pdf) tienes un artículo que describe esta afirmación. 
 
 En las próximas sesiones analizaremos los distintos tipos de interacciones ecológicas que se han descrito. La siguiente tabla muestra dichas interacciones:
 
 
 
-![interacciones](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/images/tipos_interacciones.png)
+![interacciones](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/presentacion/images/tipos_interacciones.png)
 
 
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://aprendiendo-cosas.github.io/Te_comp_inter_ecologia_ccaa/presentacion/comp_inter.html) página. 
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://aprendiendo-cosas.github.io/Te_comp_inter_ecologia_ccaa/presentacion/comp_inter.html) página. 
 
 + La competencia interespecífica consiste en la interacción entre dos o más especies que usan los mismos tipos de recursos.
 + Tipos de competencia:

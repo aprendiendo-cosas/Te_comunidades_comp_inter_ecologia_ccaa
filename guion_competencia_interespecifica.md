@@ -37,7 +37,7 @@ En las próximas sesiones analizaremos los distintos tipos de interacciones ecol
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://aprendiendo-cosas.github.io/Te_comp_inter_ecologia_ccaa/presentacion/comp_inter.html) página. 
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2020-2021/guion_competencia_interespecifica.html) página. 
 
 + La competencia interespecífica consiste en la interacción entre dos o más especies que usan los mismos tipos de recursos.
 + Tipos de competencia:

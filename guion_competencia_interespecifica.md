@@ -1,12 +1,12 @@
 # Guión de la sesión denominada "Competencia interespecífica"
 
 
-> + **_Versión_**: 2020-2021
+> + **_Versión_**: 2021-2022
 > + **_Asignatura (grado)_**: Ecología (CCAA)
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
-![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/imagenes/competencia_inter.png)
+![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2021-2022/imagenes/competencia_inter.png)
 
 ## Objetivos 
 
@@ -18,54 +18,29 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 
    
 
- ## Contenidos. Breve introducción a las interacciones ecológicas
-Antes de hablar de competencia interespecífica, pongamos en contexto este concepto. 
-
-La competencia interespecífica es uno de los muchos tipos de interacciones que ocurren en las comunidades ecológicas. A través de estas interacciones se produce la transferencia de materia y energía entre los distintos niveles en los que se organiza la vida en la Tierra. Esto último cobrará más sentido cuando estudiemos los ciclos biogeoquímicos. Las relaciones o interacciones son fundamentales porque su abundancia y configuración contribuye a explicar ciertas propiedades de los ecosistemas:
-
-+ Los sistemas con más interacciones son más estables. Es decir, se ven menos afectados por las condiciones ambientales externas. [Este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/biblio/interacciones_estabilidad_1.pdf) artículo describe muy bien esta afirmación. 
-+ También se ha observado que en las comunidades en las que hay más interacciones, hay más productividad. [Este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/biblio/interacciones_estabilidad_2.pdf) artículo lo resume bien. 
-+ Por último sabemos que el equilibrio en el tipo de interacciones (la llamada equitatividad de interacciones) genera más estabilidad en el ecosistema. De nuevo, [aquí](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/biblio/interacciones_estabilidad_3.pdf) tienes un artículo que describe esta afirmación. 
-
-En las próximas sesiones analizaremos los distintos tipos de interacciones ecológicas que se han descrito. La siguiente tabla muestra dichas interacciones:
-
-
-
-![interacciones](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/presentacion/images/tipos_interacciones.png)
-
 
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2020-2021/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2020-2021/presentacion/comp_inter.html) página. 
-
-+ La competencia interespecífica consiste en la interacción entre dos o más especies que usan los mismos tipos de recursos.
-+ Tipos de competencia:
-  + Interferencia.
-  + Explotación.
-+ Efectos de la competencia interespecífica a escala de individuo y de población.
-+ Modelización del proceso usando según Lotka y Volterra.
-+ Factores que limitan la competencia interespecífica en la naturaleza.
-
-A continuación puedes ver el vídeo de la sesión.
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2021-2022/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2021-2022/presentacion/comp_inter.html) página e incrustado a continuación:
 
 
 
-*Curso 2020-2021*
+<iframe
+  src="https://rawcdn.githack.com/aprendiendo-cosas/Te_ecosistemas_prod_primaria_ecologia_ccaa/2021-2022/presentacion/produccion_primaria.html"
+  style="width:100%; height:450px;"
+></iframe>
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/EB8dz0eWA9A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+## Evaluación de la sesión según los estudiantes
 
+Aquí puedes ver los resultados que, por ahora, arroja [esta](https://docs.google.com/forms/d/e/1FAIpQLScbCKaNkzzjV5bH0yek41FO-KS7LtLhT_ilITS_ZR0Z2XJyCA/viewform?usp=sf_link) encuesta sobre grado de satisfacción de los objetivos planteados. Por favor, rellénala si no lo has hecho ya. Se tardan 10 segundos y sus resultados son de gran utilidad para mejorar los contenidos cada año. Gracias.
 
+<img src="https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2021-2022/imagenes/cumplimiento_objetivos.png" alt="image" style="zoom:50%;" />
 
-*Curso 2019-2020*
+<img src="https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2021-2022/imagenes/desempenio_profesor.png" alt="image" style="zoom:50%;" />
 
-**Vídeo 1**
+Además, los estudiantes hicieron los siguientes comentarios:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VXQx5w1LoTw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
-
-**Vídeo 2**
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CzvOxSdFmuY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
++ Va muy deprisa y creo que es difícil captar de una los modelos aunque explique su significado.
++ Las gráficas :((. A lo mejor expicarlas de forma más visual, con vídeos o dibujos "animados" (dibujar o señalar sobre las diapositivas las conclusiones).

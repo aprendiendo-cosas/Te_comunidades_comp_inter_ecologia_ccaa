@@ -6,7 +6,7 @@
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
-![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2022-2023/imagenes/competencia_inter.png)
+![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2022_2023/imagenes/competencia_inter.png)
 
 ## Objetivos 
 
@@ -22,7 +22,7 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2022-2023/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2022-2023/presentacion/comp_inter.html) página e incrustado a continuación:
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2022_2023/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2022_2023/presentacion/comp_inter.html) página e incrustado a continuación:
 
 
 
@@ -31,4 +31,4 @@ A lo largo de la sesión se describen los siguientes elementos, que se pueden ob
   style="width:100%; height:450px;"
 ></iframe>
 
-Además, esta presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo. 
+Además, [esta](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2022_2023/presentacion/isoclinas.pptx) presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo. 

@@ -47,9 +47,6 @@ En esta ocasión, la pregunta bisagra combina los distintos tipos de relaciones 
 >
 >
 >
->
->
-> Puedes realizar la comparación teniendo en cuenta el tipo de crecimiento poblacional que hay cuando predomina cada tipo de interacción (ej. Exponencial), la forma en la que impacta la interacción al crecimiento (ej. Frena el crecimiento de las presas) y el nivel de estabilidad que aporta cada interacción al tamaño poblacional (ej. la competencia xxx aporta más estabilidad que yyyy).
 
 
 

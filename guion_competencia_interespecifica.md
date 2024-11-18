@@ -1,20 +1,20 @@
 # Guión de la sesión denominada "Competencia interespecífica"
 
-
-> + **_Versión_**: 2023-2024
+> + **_Tipo de material_**: <span style="display: inline-block; font-size: 12px; color: white; background-color: #4caf50; border-radius: 5px; padding: 5px; font-weight: bold;"> Prácticas</span> 
+> + **_Versión_**: 2024-2025
 > + **_Asignatura (grado)_**: Ecología (CCAA)
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
-![portada](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2023_2024/imagenes/competencia_inter.png)
+![portada]( https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2024_2025/imagenes/competencia_inter.png)
 
 ## Objetivos 
 
 En esta guía se describen dos sesiones de una hora cada una. Tiene los siguientes objetivos. 
 
- + Definición del concepto de competencia interespecífica, que se pone de manifiesto en las comunidades ecológicas.
- + Aprender el impacto que tiene la competencia sobre el crecimiento de las poblaciones implicadas en dicha interacción. Además del ya conocido "freno" provocado por la competencia intraespecífica, analizaremos en qué medida la competencia entre especies también afecta al crecimiento poblacional. 
- + Estudiar el modelo de Lotka y Volterra como instrumento matemático para comprender el impacto de la competencia en las poblaciones de las especies afectadas.
++ Definición del concepto de competencia interespecífica, que se pone de manifiesto en las comunidades ecológicas.
++ Aprender el impacto que tiene la competencia sobre el crecimiento de las poblaciones implicadas en dicha interacción. Además del ya conocido "freno" provocado por la competencia intraespecífica, analizaremos en qué medida la competencia entre especies también afecta al crecimiento poblacional. 
++ Estudiar el modelo de Lotka y Volterra como instrumento matemático para comprender el impacto de la competencia en las poblaciones de las especies afectadas.
 
    
 
@@ -22,18 +22,28 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2023_2024/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2023_2024/presentacion/comp_inter.html) página e incrustado a continuación:
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2024_2025/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2024_2025/presentacion/comp_inter.html) página e incrustado a continuación:
 
 
 
 <iframe
-  src="https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2023_2024/presentacion/comp_inter.html"
+  src="https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/2024_2025/presentacion/comp_inter.html"
   style="width:100%; height:450px;"
 ></iframe>
 
-Además, [esta](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2023_2024/presentacion/isoclinas.pptx) presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo. 
+Además, [esta](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2024_2025/presentacion/isoclinas.pptx) presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo.
 
 
 
+****
 
+[Aquí](https://github.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/archive/refs/tags/2024_2025.zip) puedes descargar un archivo .zip que contiene este guión en formato html y todo el material que incluye.
+
+****
+Haz click [aquí](https://github.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/releases) para ver cómo ha cambiado este guión en los distintos cursos académicos.
+
+****
+ <p xmlns:cc="http://creativecommons.org/ns#" >El contenido de este repositorio se puede utilizar bajo la siguiente licencia:  <a  href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"  target="_blank" rel="license noopener noreferrer"  style="display:inline-block;">CC BY-NC-SA 4.0<img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"  alt=""></a></p> 
+
+<p>Esta licencia no aplica a enlaces a artículos, libros o imágenes no originales. Estos productos tienen su licencia correspondiente.</p>
 

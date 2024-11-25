@@ -1,4 +1,4 @@
-# Guión de la sesión denominada "Competencia interespecífica"
+# Competencia interespecífica
 
 > + **_Tipo de material_**: <span style="display: inline-block; font-size: 12px; color: white; background-color: #4caf50; border-radius: 5px; padding: 5px; font-weight: bold;"> Prácticas</span> 
 > + **_Versión_**: 2024-2025

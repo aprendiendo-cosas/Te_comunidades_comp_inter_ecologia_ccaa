@@ -23,12 +23,12 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/main/presentacion/comp_inter.html) página e incrustado a continuación:
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/presentacion/comp_inter.html) página e incrustado a continuación:
 
 
 
 <iframe
-  src="https://rawcdn.githack.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/main/presentacion/comp_inter.html"
+  src="https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/presentacion/comp_inter.html"
   style="width:100%; height:450px;"
 ></iframe>
 

@@ -34,6 +34,16 @@ A lo largo de la sesión se describen los siguientes elementos, que se pueden ob
 
 Además, [esta](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/isoclinas.pptx) presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo.
 
+Y a continuación se muestra la formulación en la pizarra de las isoclinas de crecimiento cero y condiciones de coexistencia de las especies que compiten. 
+
+
+
+
+
+
+
+
+
 
 
 ****

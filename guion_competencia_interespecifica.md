@@ -1,12 +1,12 @@
 # Competencia interespecífica
 
-> + **_Tipo de material_**: <span style="display: inline-block; font-size: 12px; color: white; background-color: #029BF9; border-radius: 5px; padding: 5px; font-weight: bold;">Teoría</span>  
+> + **_Tipo de material_**: <span style="display: inline-block; font-size: 12px; color: white; background-color: #029BF9; border-radius: 5px; padding: 5px; font-weight: bold;">Teoría</span> 
 > + **_Versión_**: 2025-2026
 > + **_Asignatura (grado)_**: Ecología (CCAA)
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
-![portada](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/imagenes/competencia_inter.png)
+![portada](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/imagenes/competencia_inter.png)
 
 ## Objetivos 
 
@@ -17,28 +17,28 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 + Estudiar el modelo de Lotka y Volterra como instrumento matemático para comprender el impacto de la competencia en las poblaciones de las especies afectadas.
 + Entender cómo interactúan los dos tipos de competencia que conocemos: la intraespecífica y la interespecífica. 
 
-   
-
 
 
 ## Competencia interespecífica 
 
-A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/presentacion/comp_inter.html) página e incrustado a continuación:
+A lo largo de la sesión se describen los siguientes elementos, que se pueden observar con detalle en [este](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2025_2026/presentacion/competencia_interespecifica.xmind) mapa mental. Dicho mapa puede visualizarse de manera dinámica en [esta](https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/presentacion/comp_inter.html) página e incrustado a continuación:
 
 
 
 <iframe
-  src="https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/presentacion/comp_inter.html"
+  src="https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/presentacion/comp_inter.html"
   style="width:100%; height:450px;"
 ></iframe>
 
-Además, [esta](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/main/presentacion/isoclinas.pptx) presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo.
+Además, [esta](https://github.com/aprendiendo-cosas/Te_comp_inter_ecologia_ccaa/raw/2025_2026/presentacion/isoclinas.pptx) presentación muestra de manera detallada los esquemas que usamos para explicar las isoclinas de crecimiento cero. Dichos esquemas están extraidos de [este](https://www.youtube.com/watch?v=obasfCufOr0) vídeo.
 
 Y a continuación se muestra la formulación en la pizarra de las isoclinas de crecimiento cero y condiciones de coexistencia de las especies que compiten. 
 
+![pizarra](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/imagenes/pizarra.jpg)
 
+Nótese que la clase se impartió el día 25 de noviembre, que es el día contra la violencia de género. Alguien nos lo recordó dejando este cartel sobre la pizarra. También había consignas pintadas en la pizarra, pero tuve que borrarlas para hacer mi trabajo. Sirva este párrafo como recordatorio de todas las personas que sufren violencia de género.
 
-
+![25N](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/imagenes/25N.jpg)
 
 
 

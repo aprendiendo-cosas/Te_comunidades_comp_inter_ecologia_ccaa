@@ -1,14 +1,18 @@
 # Competencia interespecífica
 
 > + **_Tipo de material_**: <span style="display: inline-block; font-size: 12px; color: white; background-color: #029BF9; border-radius: 5px; padding: 5px; font-weight: bold;">Teoría</span> 
-> + **_Versión_**: 2025-2026
+> + **_Versión_**: 2026-2027
 > + **_Asignatura (grado)_**: Ecología (CCAA)
 > + **_Autor_**: Curro Bonet-García (fjbonet@uco.es)
 > + **Duración**: Aproximadamente 2 horas.
 
 ![portada](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/imagenes/competencia_inter.png)
 
-## Objetivos 
+[TOC]
+
+
+
+## 1. Objetivos 
 
 En esta guía se describen dos sesiones de una hora cada una. Tiene los siguientes objetivos. 
 
@@ -36,10 +40,6 @@ Y a continuación se muestra la formulación en la pizarra de las isoclinas de c
 
 ![pizarra](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/imagenes/pizarra.jpg)
 
-Nótese que la clase se impartió el día 25 de noviembre, que es el día contra la violencia de género. Alguien nos lo recordó dejando este cartel sobre la pizarra. También había consignas pintadas en la pizarra, pero tuve que borrarlas para hacer mi trabajo. Sirva este párrafo como recordatorio de todas las personas que sufren violencia de género.
-
-![25N](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/2025_2026/imagenes/25N.jpg)
-
 
 
 
@@ -52,6 +52,10 @@ Nótese que la clase se impartió el día 25 de noviembre, que es el día contra
 
 ****
 Haz click [aquí](https://github.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/releases) para ver cómo ha cambiado este guión en los distintos cursos académicos.
+
+---
+
+[Aquí](https://github.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/blob/2026_2027/notas_imparticion_Te_comunidades_comp_inter_ecologia_ccaa.md) puedes ver las notas que tomó el profesor una vez que se impartió la clase.
 
 ****
  <p xmlns:cc="http://creativecommons.org/ns#" >El contenido de este repositorio se puede utilizar bajo la siguiente licencia:  <a  href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1"  target="_blank" rel="license noopener noreferrer"  style="display:inline-block;">CC BY-NC-SA 4.0<img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"  alt=""><img  style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"   src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"  alt=""></a></p> 

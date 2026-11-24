@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de competencia</title>
+<style>
+  :root{
+    --c1:#a0522d; --c2:#2b6cb0; --red:#dc2626;
+    --ink:#111827; --muted:#4b5563; --line:#d1d5db; --bg:#f8fafc; --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.35}
+  [hidden]{display:none!important}
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.2rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);background:var(--card)}
+  header h1{font-size:1.2rem;margin:0}
+  .sp1{color:var(--c1);font-weight:700}
+  .sp2{color:var(--c2);font-weight:700}
+  button{font:inherit;font-size:.9rem;padding:.35rem .7rem;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer}
+  button:hover{border-color:#9ca3af}
+  button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  button.b1{border-color:var(--c1);color:var(--c1)}
+  button.b2{border-color:var(--c2);color:var(--c2)}
+  .views{display:flex;flex-wrap:wrap;gap:.3rem}
+  .views button{font-weight:600}
+  .presets{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center}
+  .presets span{color:var(--muted);font-size:.9rem;margin-right:.2rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem}
+  .col{display:flex;flex-direction:column;gap:.8rem;min-width:0}
+  h2{font-size:1rem;margin:0 0 .45rem}
+  h2 small{font-weight:400;color:var(--muted)}
+  .slider{margin:.55rem 0}
+  .slider label{display:flex;justify-content:space-between;gap:.5rem;font-size:.88rem}
+  .slider output{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+  .slider input{width:100%}
+  .derived{font-size:.88rem;background:#f3f4f6;border-radius:6px;padding:.45rem .55rem;margin-top:.4rem;font-variant-numeric:tabular-nums}
+  .derived div{margin:.1rem 0}
+  .row{display:flex;flex-wrap:wrap;gap:.35rem;margin:.35rem 0}
+  .note{font-size:.82rem;color:var(--muted);margin:.35rem 0 0}
+  canvas{display:block;width:100%}
+  .legend{display:flex;flex-wrap:wrap;gap:.3rem 1rem;font-size:.82rem;color:var(--muted);margin-top:.35rem}
+  .legend i{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;vertical-align:-.1rem;margin-right:.25rem}
+  .grow{color:#047857;font-weight:600} .shrink{color:var(--red);font-weight:600} .still{color:var(--ink);font-weight:600}
+  .status{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+  details summary{cursor:pointer;font-weight:600}
+
+  /* ---- Pestaña 1: entendiendo las isoclinas ---- */
+  #viewBuild{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:.8rem;padding:.8rem}
+  .stepT{font-size:1.2rem;margin:0 0 .5rem}
+  .stepT small{display:block;font-size:.85rem;font-weight:400;color:var(--muted);margin-bottom:.15rem}
+  .pz{font-size:1.05rem;line-height:1.3;margin:.3rem 0 .6rem}
+  .pz .ln{display:flex;flex-wrap:wrap;align-items:center;gap:.15rem .45rem;padding:.18rem .55rem;border-left:4px solid var(--line);border-radius:4px;margin:.15rem 0}
+  .pz .ln.s1{border-left-color:var(--c1)} .pz .ln.s2{border-left-color:var(--c2)}
+  .pz .ln.now{background:#fef3c7}
+  .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.15}
+  .fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 .25em}
+  .par{font-size:1.9em;font-weight:300;line-height:1}
+  .box{border:2px solid var(--ink);border-radius:4px;padding:0 .2em}
+  .box.b1{border-color:var(--c1)} .box.b2{border-color:var(--c2)}
+  .tag{font-size:.82rem;color:var(--muted);font-style:italic}
+  .expl{font-size:1rem;margin:.2rem 0}
+  .expl ul{margin:.4rem 0 .1rem;padding-left:1.2rem} .expl li{margin:.2rem 0}
+  .stepnote{font-size:.92rem;color:var(--muted);margin:.55rem 0 0}
+  .nav{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+  .dots{display:flex;flex-wrap:wrap;gap:5px}
+  .dots button{width:15px;height:15px;padding:0;border-radius:50%}
+  .dots button.on{background:var(--ink);border-color:var(--ink)}
+  .dots button.past{background:#9ca3af;border-color:#9ca3af}
+  #bcv{aspect-ratio:1/1;max-height:74vh}
+  .read{font-size:.95rem;font-variant-numeric:tabular-nums;margin-top:.45rem}
+  .read div{margin:.15rem 0}
+
+  /* ---- Pestaña 2: simulador ---- */
+  #viewSim{display:grid;grid-template-columns:270px minmax(0,1.15fr) minmax(0,1fr);gap:.8rem;padding:.8rem}
+  #slope{height:340px}
+  #phase{aspect-ratio:1/1;max-height:56vh;cursor:crosshair}
+  #time{height:190px}
+  .niche{font-size:.92rem;margin-top:.45rem}
+  .niche div{margin:.15rem 0}
+  .q{border-top:1px solid var(--line);padding:.5rem 0}
+  .q:first-of-type{border-top:0;padding-top:0}
+  .q p{margin:.2rem 0;font-size:.9rem}
+  .result{margin-top:.4rem;padding:.55rem .7rem;border-radius:8px;background:#fef9c3;font-weight:600}
+  .result small{display:block;font-weight:400;margin-top:.2rem}
+  .toggles{display:flex;flex-wrap:wrap;gap:.25rem .9rem;font-size:.85rem;margin-top:.4rem}
+
+  @media (max-width:1150px){ #viewSim{grid-template-columns:260px minmax(0,1fr)} #colPlots{grid-column:1 / -1} }
+  @media (max-width:900px){ #viewBuild{grid-template-columns:minmax(0,1fr)} }
+  @media (max-width:760px){ #viewSim,#viewBuild{grid-template-columns:minmax(0,1fr);padding:.6rem 16px} header{padding:.6rem 16px} #slope{height:300px} }
+</style>
+</head>
+<body>
+<header>
+  <h1>Competencia entre dos especies: <span class="sp1">especie 1</span> y <span class="sp2">especie 2</span></h1>
+  <nav class="views">
+    <button id="vBuild" class="on">1 · Entendiendo las isoclinas de crecimiento cero</button>
+    <button id="vSim">2 · Simulador</button>
+  </nav>
+  <div class="presets" id="simCtrls" hidden><span>Casos:</span>
+    <button data-preset="win1">Gana la 1</button>
+    <button data-preset="win2">Gana la 2</button>
+    <button data-preset="unst">Coexistencia inestable (gana la que llega primero)</button>
+    <button data-preset="coex">Coexistencia</button>
+  </div>
+</header>
+
+<!-- Pestaña 1: entendiendo las isoclinas, paso a paso -->
+<main id="viewBuild">
+  <div class="col">
+    <section class="card">
+      <h2 class="stepT" id="bTitle"></h2>
+      <div class="pz" id="bPz"></div>
+      <div class="expl" id="bExpl"></div>
+      <p class="stepnote" id="bNote"></p>
+      <div class="nav">
+        <button id="bPrev">← Anterior</button>
+        <button id="bNext">Siguiente →</button>
+        <div class="dots" id="bDots"></div>
+      </div>
+      <p class="note">También con las flechas del teclado o con el pasador de diapositivas.</p>
+    </section>
+    <section class="card">
+      <details>
+        <summary>Cambiar los números del ejemplo</summary>
+        <div id="bSliders"></div>
+      </details>
+    </section>
+  </div>
+  <div class="col">
+    <section class="card">
+      <canvas id="bcv"></canvas>
+      <div class="read" id="bRead"></div>
+    </section>
+  </div>
+</main>
+
+<!-- Pestaña 2: simulador -->
+<main id="viewSim" hidden>
+  <!-- Columna 1: controles -->
+  <div class="col">
+    <section class="card">
+      <h2>La ladera</h2>
+      <p class="note" style="margin-top:0">Cada número es cuántos conejos puede alimentar esa parte de la ladera.</p>
+      <div id="sliders"></div>
+      <div class="derived" id="derived"></div>
+      <p class="note">Cada conejo reparte su tiempo por todo su nicho. Un conejo blanco pasa en la ladera media una parte de su tiempo y come allí hierba que también necesita el marrón: por eso α = (ladera media)/K₂. La agresividad multiplica ese efecto: el conejo agresivo espanta al otro de más sitio del que come.</p>
+    </section>
+    <section class="card">
+      <h2>Simulación</h2>
+      <div class="row">
+        <button id="play">▶ Reproducir</button>
+        <button id="reset">↺ Inicio</button>
+        <button id="clear">Borrar trayectorias</button>
+      </div>
+      <div class="slider"><label>Velocidad <output id="speedOut"></output></label>
+        <input type="range" id="speed" min="0.5" max="15" step="0.5" value="4"></div>
+      <div class="status" id="status"></div>
+      <p class="note">Haz clic en el plano de fases para elegir cuántos conejos de cada especie hay al principio.</p>
+      <p class="note">r₁ = r₂ = 1. La tasa de crecimiento cambia la velocidad, no el resultado.</p>
+    </section>
+  </div>
+
+  <!-- Columna 2: la ladera -->
+  <div class="col">
+    <section class="card">
+      <h2>La ladera <small>· el nicho de cada conejo</small></h2>
+      <canvas id="slope"></canvas>
+      <div class="legend"><span>Cada conejo dibujado es un individuo.</span>
+        <span><span class="sp1">Conejo marrón</span> = especie 1 · <span class="sp2">conejo blanco</span> = especie 2</span></div>
+      <div class="niche" id="niche"></div>
+    </section>
+    <section class="card">
+      <h2>Las dos preguntas</h2>
+      <div class="q">
+        <p><b>¿Puede entrar el <span class="sp1">conejo marrón</span> si el <span class="sp2">blanco</span> está solo y a tope?</b></p>
+        <p id="q1"></p>
+        <button class="b1" id="test1">Probar: llegan unos pocos conejos marrones</button>
+      </div>
+      <div class="q">
+        <p><b>¿Puede entrar el <span class="sp2">conejo blanco</span> si el <span class="sp1">marrón</span> está solo y a tope?</b></p>
+        <p id="q2"></p>
+        <button class="b2" id="test2">Probar: llegan unos pocos conejos blancos</button>
+      </div>
+      <div class="result" id="result"></div>
+    </section>
+  </div>
+
+  <!-- Columna 3: isoclinas y tiempo -->
+  <div class="col" id="colPlots">
+    <section class="card">
+      <h2>Plano de fases <small>· isoclinas de crecimiento cero</small></h2>
+      <canvas id="phase"></canvas>
+      <div class="toggles">
+        <label><input type="checkbox" id="tZones" checked> Zonas de crecimiento</label>
+        <label><input type="checkbox" id="tArrows" checked> Flechas</label>
+        <label><input type="checkbox" id="tEq" checked> Equilibrios</label>
+      </div>
+      <div class="legend">
+        <span><i style="background:rgba(160,82,45,.25)"></i>el conejo marrón crece</span>
+        <span><i style="background:rgba(43,108,176,.25)"></i>el conejo blanco crece</span>
+        <span>● equilibrio estable · ○ inestable</span>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Lo mismo, a lo largo del tiempo</h2>
+      <canvas id="time"></canvas>
+    </section>
+  </div>
+</main>
+
+<script>
+/* ======== Pestaña 2: simulador ======== */
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const C1 = '#a0522d', C2 = '#2b6cb0', INK = '#111827', MUTED = '#4b5563', PT = '#facc15';
+const fmt = (x, d = 1) => (!isFinite(x) || Math.abs(x) > 1e6) ? '∞'
+  : x.toLocaleString('es-ES', {maximumFractionDigits: d, minimumFractionDigits: 0});
+
+/* ---------------- Estado ---------------- */
+// A: ladera baja (solo marrón) · G: ladera media (compartida) · V: ladera alta (solo blanco)
+// i1, i2: agresividad. Todo en «conejos que caben»: un conejo dibujado = un individuo.
+const S = {A: 25, G: 30, V: 25, i1: 1, i2: 1, r1: 1, r2: 1};
+let P = {};
+const sim = {N1: 10, N2: 10, t: 0, running: false, done: false, traj: [], past: [], start: {N1: 10, N2: 10}};
+
+const PRESETS = {
+  win1: {A: 30, G: 30, V: 0, i1: 1.2, i2: 1},
+  win2: {A: 0, G: 30, V: 30, i1: 1, i2: 1.2},
+  unst: {A: 5, G: 40, V: 5, i1: 1.5, i2: 1.5},
+  coex: {A: 25, G: 30, V: 25, i1: 1, i2: 1},
+};
+const SLIDERS = [
+  {k: 'A', label: '<span class="sp1">Ladera baja</span> (hierba alta): solo el marrón', min: 0, max: 50, step: 5, d: 0},
+  {k: 'G', label: '<b>Ladera media</b>: la usan los dos', min: 0, max: 50, step: 5, d: 0},
+  {k: 'V', label: '<span class="sp2">Ladera alta</span> (hierba corta): solo el blanco', min: 0, max: 50, step: 5, d: 0},
+  {k: 'i1', label: 'Agresividad del <span class="sp1">conejo marrón</span>', min: 1, max: 3, step: 0.05, d: 2, pre: '×'},
+  {k: 'i2', label: 'Agresividad del <span class="sp2">conejo blanco</span>', min: 1, max: 3, step: 0.05, d: 2, pre: '×'},
+];
+
+function derive() {
+  const K1 = S.A + S.G, K2 = S.G + S.V;
+  P = {A: S.A, G: S.G, V: S.V, i1: S.i1, i2: S.i2, K1, K2,
+       a: K2 > 0 ? S.i2 * S.G / K2 : 0, b: K1 > 0 ? S.i1 * S.G / K1 : 0};
+}
+
+/* ---------------- Modelo ---------------- */
+function f(n1, n2) {
+  const {K1, K2, a, b} = P;
+  const d1 = K1 > 0 ? S.r1 * n1 * (K1 - n1 - a * n2) / K1 : -S.r1 * n1;
+  const d2 = K2 > 0 ? S.r2 * n2 * (K2 - n2 - b * n1) / K2 : -S.r2 * n2;
+  return [d1, d2];
+}
+function rk4(n1, n2, h) {
+  const k1 = f(n1, n2);
+  const k2 = f(n1 + h / 2 * k1[0], n2 + h / 2 * k1[1]);
+  const k3 = f(n1 + h / 2 * k2[0], n2 + h / 2 * k2[1]);
+  const k4 = f(n1 + h * k3[0], n2 + h * k3[1]);
+  return [Math.max(0, n1 + h / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])),
+          Math.max(0, n2 + h / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]))];
+}
+function equilibria() {
+  const {K1, K2, a, b} = P, E = [{x: 0, y: 0, stable: false}];
+  if (K1 > 0) E.push({x: K1, y: 0, stable: b * K1 > K2});
+  if (K2 > 0) E.push({x: 0, y: K2, stable: a * K2 > K1});
+  const det = 1 - a * b;
+  if (Math.abs(det) > 1e-9) {
+    const x = (K1 - a * K2) / det, y = (K2 - b * K1) / det;
+    if (x > 1e-9 && y > 1e-9) E.push({x, y, stable: det > 0, inner: true});
+  }
+  return E;
+}
+function verdict() {
+  const {K1, K2, a, b} = P, tol = 1e-9 * Math.max(1, K1, K2);
+  const free1 = K1 - a * K2, free2 = K2 - b * K1;
+  return {free1, free2, in1: free1 > tol, in2: free2 > tol};
+}
+
+/* ---------------- Controles ---------------- */
+function renderSliders() {
+  const box = $('sliders'); box.innerHTML = '';
+  for (const s of SLIDERS) {
+    const w = document.createElement('div'); w.className = 'slider';
+    w.innerHTML = `<label><span>${s.label}</span><output></output></label>
+      <input type="range" min="${s.min}" max="${s.max}" step="${s.step}">`;
+    const inp = w.querySelector('input'), out = w.querySelector('output');
+    s.inp = inp; s.out = out;
+    inp.addEventListener('input', () => {
+      S[s.k] = +inp.value;
+      if (S.A + S.G < 5) S.A = 5 - S.G;     // que ninguna especie se quede sin sitio
+      if (S.V + S.G < 5) S.V = 5 - S.G;
+      syncSliders(); onParams();
+    });
+    box.appendChild(w);
+  }
+  syncSliders();
+}
+function syncSliders() {
+  for (const s of SLIDERS) if (s.inp) {
+    s.inp.value = S[s.k];
+    s.out.textContent = s.pre ? s.pre + fmt(S[s.k], s.d) : fmt(S[s.k], s.d) + ' conejos';
+  }
+}
+function renderDerived() {
+  const {K1, K2, a, b, A, G, V, i1, i2} = P;
+  $('derived').innerHTML = `<div><span class="sp1">K₁</span> = ${fmt(A,0)} + ${fmt(G,0)} = <b>${fmt(K1,0)}</b> &nbsp; <span class="sp2">K₂</span> = ${fmt(G,0)} + ${fmt(V,0)} = <b>${fmt(K2,0)}</b></div>
+    <div><span class="sp1">α</span> = ${i2 !== 1 ? fmt(i2,2) + ' · ' : ''}${fmt(G,0)}/${fmt(K2,0)} = <b>${fmt(a,2)}</b> &nbsp; <span class="sp2">β</span> = ${i1 !== 1 ? fmt(i1,2) + ' · ' : ''}${fmt(G,0)}/${fmt(K1,0)} = <b>${fmt(b,2)}</b></div>`;
+}
+
+/* ---------------- Simulación ---------------- */
+function setStart(n1, n2, keepPast = true) {
+  if (keepPast && sim.traj.length > 1) sim.past.push(sim.traj);
+  if (sim.past.length > 12) sim.past.shift();
+  sim.N1 = n1; sim.N2 = n2; sim.t = 0; sim.start = {N1: n1, N2: n2};
+  sim.traj = [{t: 0, N1: n1, N2: n2}]; sim.done = false;
+}
+function onParams() {
+  derive();
+  sim.past = [];
+  sim.traj = [{t: 0, N1: sim.N1, N2: sim.N2}]; sim.t = 0; sim.start = {N1: sim.N1, N2: sim.N2}; sim.done = false;
+  renderDerived();
+  drawAll();
+}
+function setRunning(v) { sim.running = v; $('play').textContent = v ? '⏸ Pausa' : '▶ Reproducir'; }
+
+let last = null, stepCount = 0;
+const H = 0.01;
+function loop(ts) {
+  if (sim.running) {
+    const dtReal = last == null ? 0 : Math.min(0.1, (ts - last) / 1000);
+    const steps = Math.ceil(dtReal * +$('speed').value / H);
+    for (let k = 0; k < steps; k++) {
+      [sim.N1, sim.N2] = rk4(sim.N1, sim.N2, H);
+      sim.t += H;
+      if (++stepCount % 5 === 0) sim.traj.push({t: sim.t, N1: sim.N1, N2: sim.N2});
+    }
+    const [d1, d2] = f(sim.N1, sim.N2), sc = Math.max(1, P.K1, P.K2);
+    if ((Math.abs(d1) + Math.abs(d2) < 2e-4 * sc && sim.t > 2) || sim.t > 400) {
+      sim.traj.push({t: sim.t, N1: sim.N1, N2: sim.N2});
+      sim.done = true; setRunning(false);
+    }
+    drawAll();
+  }
+  last = ts;
+  requestAnimationFrame(loop);
+}
+
+/* ---------------- Canvas util ---------------- */
+function prep(cv) {
+  const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) {
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  }
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  return {ctx, w, h, dpr};
+}
+function arrow(ctx, x0, y0, x1, y1, hs) {
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+  const ang = Math.atan2(y1 - y0, x1 - x0);
+  ctx.beginPath(); ctx.moveTo(x1, y1);
+  ctx.lineTo(x1 - hs * Math.cos(ang - 0.45), y1 - hs * Math.sin(ang - 0.45));
+  ctx.lineTo(x1 - hs * Math.cos(ang + 0.45), y1 - hs * Math.sin(ang + 0.45));
+  ctx.closePath(); ctx.fill();
+}
+const frac = x => x - Math.floor(x);
+function mix(a, b, t) {
+  const pa = [1, 3, 5].map(i => parseInt(a.slice(i, i + 2), 16)), pb = [1, 3, 5].map(i => parseInt(b.slice(i, i + 2), 16));
+  return `rgb(${pa.map((v, k) => Math.round(v + (pb[k] - v) * t)).join(',')})`;
+}
+
+/* ---------------- La ladera ---------------- */
+// Un conejo de perfil, mirando ladera arriba. (x, y): apoyo en el suelo; s: tamaño.
+function rabbit(ctx, x, y, s, sp) {
+  const fill = sp === 1 ? '#8b5a2b' : '#ffffff', line = sp === 1 ? '#3f2410' : '#1f2937';
+  ctx.fillStyle = fill; ctx.strokeStyle = line; ctx.lineWidth = Math.max(1, s * 0.07);
+  ctx.beginPath(); ctx.ellipse(x + s * 0.19, y - s * 0.66, s * 0.05, s * 0.17, -0.3, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(x - s * 0.05, y - s * 0.22, s * 0.30, s * 0.22, 0, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.arc(x + s * 0.24, y - s * 0.40, s * 0.15, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(x + s * 0.29, y - s * 0.68, s * 0.05, s * 0.17, 0.15, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = sp === 1 ? '#f3e2cc' : '#ffffff';
+  ctx.beginPath(); ctx.arc(x - s * 0.35, y - s * 0.27, s * 0.075, 0, 7); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(x + s * 0.29, y - s * 0.43, Math.max(0.9, s * 0.03), 0, 7); ctx.fill();
+}
+let bgCache = {key: '', cv: null};
+function slopeGeom(w, h) {
+  const top = 50, bottom = 64, xs = 8, usedW = w - 16;
+  const rise = Math.max(30, (h - top - bottom) * 0.4), Hb = h - top - bottom - rise;
+  const yT = x => top + rise * (1 - (x - xs) / usedW);
+  const total = P.A + P.G + P.V;
+  return {top, bottom, xs, usedW, rise, Hb, yT, yB: x => yT(x) + Hb, xu: u => xs + u / total * usedW, total};
+}
+function slopeBackground(w, h, dpr, g) {
+  const key = [w, h, dpr, P.A, P.G, P.V].join(',');
+  if (bgCache.key === key) return bgCache.cv;
+  const cv = document.createElement('canvas'); cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const {xs, usedW, Hb, yT, yB, xu, total} = g;
+  // cielo y tierra
+  ctx.fillStyle = '#eef6fc'; ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#e9dfc8'; ctx.beginPath(); ctx.moveTo(0, yT(0) - 2); ctx.lineTo(w, yT(w) - 2); ctx.lineTo(w, h); ctx.lineTo(0, h); ctx.closePath(); ctx.fill();
+  // nieve en lo alto
+  const xn = xs + 0.84 * usedW;
+  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(xn, yT(xn) - 2); ctx.lineTo(w, yT(w) - 2); ctx.lineTo(w, yT(w) + 9); ctx.closePath(); ctx.fill();
+  // zonas
+  const tint = {A: 'rgba(160,82,45,.10)', G: 'rgba(17,24,39,.03)', V: 'rgba(43,108,176,.10)'};
+  [{k: 'A', u0: 0, u1: P.A}, {k: 'G', u0: P.A, u1: P.A + P.G}, {k: 'V', u0: P.A + P.G, u1: total}].forEach(z => {
+    if (z.u1 <= z.u0) return;
+    const x0 = xu(z.u0), x1 = xu(z.u1);
+    ctx.fillStyle = tint[z.k]; ctx.beginPath(); ctx.moveTo(x0, yT(x0)); ctx.lineTo(x1, yT(x1)); ctx.lineTo(x1, yB(x1)); ctx.lineTo(x0, yB(x0)); ctx.closePath(); ctx.fill();
+  });
+  // hierba: alta abajo, corta arriba
+  const gs = Math.max(9, Math.min(15, usedW / 75)), rows = Math.max(1, Math.floor(Hb / gs));
+  ctx.lineCap = 'round';
+  for (let r = 0; r < rows; r++) for (let x = xs + gs * (r % 2 ? 0.5 : 0.1); x < xs + usedW; x += gs) {
+    const t = (x - xs) / usedW, yb = yT(x) + (r + 0.9) * gs, hg = gs * (1.9 - 1.5 * t);
+    ctx.strokeStyle = mix('#4f8f33', '#c4d070', t); ctx.lineWidth = Math.max(1.1, gs * 0.11);
+    for (const k of [-1, 0, 1]) {
+      ctx.beginPath(); ctx.moveTo(x + k * gs * 0.12, yb);
+      ctx.quadraticCurveTo(x + k * gs * 0.15, yb - hg * 0.6, x + k * gs * 0.3, yb - hg * (k ? 0.8 : 1)); ctx.stroke();
+    }
+  }
+  // límites entre zonas
+  ctx.setLineDash([5, 4]); ctx.strokeStyle = 'rgba(17,24,39,.45)'; ctx.lineWidth = 1.3;
+  for (const u of [P.A, P.A + P.G]) if (u > 0 && u < total) {
+    const x = xu(u); ctx.beginPath(); ctx.moveTo(x, yT(x) - 10); ctx.lineTo(x, yB(x) + 2); ctx.stroke();
+  }
+  ctx.setLineDash([]);
+  bgCache = {key, cv};
+  return cv;
+}
+function drawSlope() {
+  const {ctx, w, h, dpr} = prep($('slope'));
+  const {A, G, V, K1, K2, i1, i2} = P;
+  if (A + G + V <= 0 || w < 60) return;
+  const g = slopeGeom(w, h), {xs, usedW, Hb, yT, yB, xu, total} = g;
+  ctx.drawImage(slopeBackground(w, h, dpr, g), 0, 0, w, h);
+
+  // conejos: cada uno reparte su presencia por todo su nicho (posiciones fijas por individuo)
+  const s = Math.max(11, Math.min(30, Math.sqrt(usedW * Hb / (1.6 * Math.max(total, 20)))));
+  const list = [], n1 = Math.round(sim.N1), n2 = Math.round(sim.N2);
+  for (let k = 0; k < n1; k++) list.push({u: frac(0.5 + k * 0.6180339887) * K1, v: frac(0.27 + k * 0.7548776662), sp: 1});
+  for (let k = 0; k < n2; k++) list.push({u: A + frac(0.11 + k * 0.6180339887) * K2, v: frac(0.63 + k * 0.5698402910), sp: 2});
+  for (const r of list) { r.x = xu(r.u); r.y = yT(r.x) + s * 0.8 + r.v * Math.max(0, Hb - s * 0.9); }
+  list.sort((p, q) => p.y - q.y).forEach(r => rabbit(ctx, r.x, r.y, s, r.sp));
+
+  // rótulos de las zonas
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  const zl = [
+    {u0: 0, u1: A, c: C1, l: ['Ladera baja · hierba alta', `solo el marrón · caben ${A}`], sh: ['Baja', `${A}`]},
+    {u0: A, u1: A + G, c: INK, l: ['Ladera media · compiten', `caben ${G}`], sh: ['Media', `${G}`]},
+    {u0: A + G, u1: total, c: C2, l: ['Ladera alta · hierba corta', `solo el blanco · caben ${V}`], sh: ['Alta', `${V}`]},
+  ];
+  for (const z of zl) {
+    if (z.u1 <= z.u0) continue;
+    const x0 = xu(z.u0), x1 = xu(z.u1), xm = (x0 + x1) / 2, zw = x1 - x0;
+    ctx.font = '700 13px system-ui, sans-serif';
+    const fits = ctx.measureText(z.l[0]).width <= zw + 6, L = fits ? z.l : z.sh;
+    const y2 = yT(xm) - 16, y1 = y2 - 15;
+    const xc = Math.max(ctx.measureText(L[0]).width / 2 + 3, Math.min(w - ctx.measureText(L[0]).width / 2 - 3, xm));
+    ctx.fillStyle = z.c; ctx.fillText(L[0], xc, y1);
+    ctx.font = '13px system-ui, sans-serif'; ctx.fillText(L[1], xc, y2);
+  }
+  if (G > 0 && (i1 > 1 || i2 > 1)) {
+    const xm = xu(A + G / 2), parts = [];
+    if (i1 > 1) parts.push(`marrón ×${fmt(i1, 2)}`);
+    if (i2 > 1) parts.push(`blanco ×${fmt(i2, 2)}`);
+    ctx.font = '600 12px system-ui, sans-serif'; ctx.fillStyle = '#b91c1c';
+    ctx.fillText('agresividad: ' + parts.join(' · '), xm, yT(xm) - 46);
+  }
+  // nicho de cada especie (llaves bajo la ladera)
+  const brace = (u0, u1, y, color, text) => {
+    const x0 = xu(u0) + 1, x1 = xu(u1) - 1, xm = (x0 + x1) / 2;
+    ctx.font = '600 13px system-ui, sans-serif';
+    const tw = Math.min(ctx.measureText(text).width, x1 - x0 - 16);
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x0, y - 6); ctx.lineTo(x0, y); ctx.lineTo(xm - tw / 2 - 6, y);
+    ctx.moveTo(xm + tw / 2 + 6, y); ctx.lineTo(x1, y); ctx.lineTo(x1, y - 6); ctx.stroke();
+    ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(text, xm, y, x1 - x0 - 16);
+  };
+  brace(0, K1, h - 42, C1, `nicho del conejo marrón · caben K₁ = ${fmt(K1, 0)}`);
+  brace(A, total, h - 16, C2, `nicho del conejo blanco · caben K₂ = ${fmt(K2, 0)}`);
+}
+function renderNiche() {
+  const {K1, K2, a, b} = P, N1 = sim.N1, N2 = sim.N2;
+  const line = (N, F, K, cls, name) => {
+    const tol = 0.005 * Math.max(K, 1);
+    const st = N < 0.5 ? 'no hay ninguno'
+      : F > tol ? `quedan <b>${fmt(F)}</b> sitios libres en su nicho → <span class="grow">crecen</span>`
+      : F < -tol ? `les faltan <b>${fmt(-F)}</b> sitios → <span class="shrink">decrecen</span>`
+      : `su nicho está justo lleno → <span class="still">ni crecen ni decrecen</span> (están sobre su isoclina)`;
+    return `<div><span class="${cls}">${name}: ${fmt(N, 0)}</span> · ${st}</div>`;
+  };
+  $('niche').innerHTML = line(N1, K1 - N1 - a * N2, K1, 'sp1', 'Conejos marrones')
+    + line(N2, K2 - N2 - b * N1, K2, 'sp2', 'Conejos blancos');
+}
+
+/* ---------------- Las dos preguntas ---------------- */
+function renderVerdict() {
+  const {K1, K2, a, b} = P, v = verdict();
+  const yes = '<span class="grow">Sí, puede entrar.</span>', no = '<span class="shrink">No encuentra sitio.</span>';
+  const left = fr => fr > 1e-9 ? `Quedan <b>${fmt(fr)}</b> libres. ` : fr < -1e-9 ? `Faltan ${fmt(-fr)}. ` : 'No sobra ninguno. ';
+  $('q1').innerHTML = `Con N₂ = K₂ = ${fmt(K2,0)} conejos blancos, estos ocupan α·K₂ = ${fmt(a,2)} · ${fmt(K2,0)} = <b>${fmt(a*K2)}</b> de los <b>${fmt(K1,0)}</b> sitios del nicho del marrón. `
+    + left(v.free1) + (v.in1 ? yes : no);
+  $('q2').innerHTML = `Con N₁ = K₁ = ${fmt(K1,0)} conejos marrones, estos ocupan β·K₁ = ${fmt(b,2)} · ${fmt(K1,0)} = <b>${fmt(b*K1)}</b> de los <b>${fmt(K2,0)}</b> sitios del nicho del blanco. `
+    + left(v.free2) + (v.in2 ? yes : no);
+  let r;
+  if (v.in1 && v.in2) {
+    const det = 1 - a * b, x = (K1 - a * K2) / det, y = (K2 - b * K1) / det;
+    r = `Coexistencia estable (N₁ ≈ ${fmt(x)}, N₂ ≈ ${fmt(y)}).<small>Cada especie encuentra sitio cuando la otra está a tope: cada una se estorba más a sí misma que a la otra. Las partes de la ladera que solo usa cada conejo lo hacen posible.</small>`;
+  } else if (v.in1) r = `Gana el conejo marrón (especie 1): excluye al blanco.<small>El marrón siempre encuentra sitio; el blanco, no.</small>`;
+  else if (v.in2) r = `Gana el conejo blanco (especie 2): excluye al marrón.<small>El blanco siempre encuentra sitio; el marrón, no.</small>`;
+  else r = `Coexistencia inestable: gana el que llega primero o parte con más individuos.<small>Ninguno encuentra sitio cuando el otro está a tope: con la agresividad, cada uno estorba más al otro que a sí mismo. Prueba a lanzar trayectorias desde distintos puntos.</small>`;
+  $('result').innerHTML = r;
+}
+
+/* ---------------- Plano de fases ---------------- */
+let PH = null; // geometría para el clic
+function phaseScale() {
+  const {K1, K2, a, b} = P, cap = 2.5 * Math.max(K1, K2, 1);
+  const i1 = a > 0 ? Math.min(K1 / a, cap) : 0, i2 = b > 0 ? Math.min(K2 / b, cap) : 0;
+  return 1.12 * Math.max(K1, K2, i1, i2, sim.start.N1, sim.start.N2, 1);
+}
+function drawPhase() {
+  const cv = $('phase'), {ctx, w, h} = prep(cv);
+  const {K1, K2, a, b} = P;
+  const L = 62, Rm = 16, T = 14, B = 50, pw = w - L - Rm, ph = h - T - B, M = phaseScale();
+  const X = v => L + v / M * pw, Y = v => T + ph - v / M * ph;
+  PH = {L, T, pw, ph, M};
+  ctx.save(); ctx.beginPath(); ctx.rect(L, T, pw, ph); ctx.clip();
+  const iso1 = [[K1, 0], a * M < K1 ? [K1 - a * M, M] : [0, K1 / a]];
+  const iso2 = [[0, K2], b * M < K2 ? [M, K2 - b * M] : [K2 / b, 0]];
+  if ($('tZones').checked) {
+    ctx.fillStyle = 'rgba(160,82,45,.15)'; ctx.beginPath(); ctx.moveTo(X(0), Y(0));
+    ctx.lineTo(X(iso1[0][0]), Y(iso1[0][1])); ctx.lineTo(X(iso1[1][0]), Y(iso1[1][1])); ctx.lineTo(X(0), Y(iso1[1][1])); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(43,108,176,.15)'; ctx.beginPath(); ctx.moveTo(X(0), Y(0));
+    ctx.lineTo(X(iso2[0][0]), Y(iso2[0][1])); ctx.lineTo(X(iso2[1][0]), Y(iso2[1][1])); ctx.lineTo(X(iso2[1][0]), Y(0)); ctx.closePath(); ctx.fill();
+  }
+  if ($('tArrows').checked) {
+    const n = 13, cell = pw / n;
+    ctx.strokeStyle = 'rgba(55,65,81,.45)'; ctx.fillStyle = 'rgba(55,65,81,.45)'; ctx.lineWidth = 1.2;
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+      const n1 = (i + 0.5) / n * M, n2 = (j + 0.5) / n * M;
+      const [d1, d2] = f(n1, n2), dx = d1 / M * pw, dy = -d2 / M * ph, len = Math.hypot(dx, dy);
+      if (len < 1e-9) continue;
+      const k = cell * 0.38 / len, cx = X(n1), cy = Y(n2);
+      arrow(ctx, cx - dx * k, cy - dy * k, cx + dx * k, cy + dy * k, 5);
+    }
+  }
+  ctx.lineWidth = 4; ctx.lineCap = 'round';
+  ctx.strokeStyle = C1; ctx.beginPath(); ctx.moveTo(X(iso1[0][0]), Y(iso1[0][1])); ctx.lineTo(X(iso1[1][0]), Y(iso1[1][1])); ctx.stroke();
+  ctx.strokeStyle = C2; ctx.beginPath(); ctx.moveTo(X(iso2[0][0]), Y(iso2[0][1])); ctx.lineTo(X(iso2[1][0]), Y(iso2[1][1])); ctx.stroke();
+  const path = (tr, col, lw) => { if (tr.length < 2) return; ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath();
+    tr.forEach((p, k) => k ? ctx.lineTo(X(p.N1), Y(p.N2)) : ctx.moveTo(X(p.N1), Y(p.N2))); ctx.stroke(); };
+  sim.past.forEach(tr => { path(tr, 'rgba(17,24,39,.28)', 2); const p = tr[0]; ctx.fillStyle = 'rgba(17,24,39,.35)'; ctx.beginPath(); ctx.arc(X(p.N1), Y(p.N2), 3, 0, 7); ctx.fill(); });
+  path(sim.traj, INK, 2.5);
+  ctx.restore();
+
+  ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
+  ctx.fillStyle = INK; ctx.font = '600 14px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('N₁ (conejos marrones)', L + pw / 2, h - 6);
+  ctx.save(); ctx.translate(14, T + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('N₂ (conejos blancos)', 0, 0); ctx.restore();
+  ctx.font = '600 13px system-ui, sans-serif';
+  const xt = [{v: K1, t: `K₁ = ${fmt(K1,0)}`, c: C1}];
+  if (b > 0 && K2 / b <= M) xt.push({v: K2 / b, t: `K₂/β = ${fmt(K2 / b,0)}`, c: C2});
+  xt.sort((p, q) => p.v - q.v);
+  xt.forEach((p, k) => {
+    const dy = (k > 0 && X(p.v) - X(xt[k - 1].v) < 80) ? 17 : 0;
+    ctx.fillStyle = p.c; ctx.textBaseline = 'top'; ctx.textAlign = 'center';
+    ctx.fillRect(X(p.v) - 1, T + ph, 2, 6); ctx.fillText(p.t, X(p.v), T + ph + 8 + dy);
+  });
+  const yt = [{v: K2, t: `K₂ = ${fmt(K2,0)}`, c: C2}];
+  if (a > 0 && K1 / a <= M) yt.push({v: K1 / a, t: `K₁/α = ${fmt(K1 / a,0)}`, c: C1});
+  yt.sort((p, q) => p.v - q.v);
+  yt.forEach((p, k) => {
+    const dy = (k > 0 && Y(yt[k - 1].v) - Y(p.v) < 18) ? -16 : 0;
+    ctx.fillStyle = p.c; ctx.textBaseline = 'middle'; ctx.textAlign = 'right';
+    ctx.fillRect(L - 6, Y(p.v) - 1, 6, 2);
+    ctx.save(); ctx.font = '600 12px system-ui, sans-serif';
+    ctx.fillText(p.t.split(' = ')[0], L - 8, Y(p.v) - 7 + dy); ctx.fillText(p.t.split(' = ')[1], L - 8, Y(p.v) + 8 + dy); ctx.restore();
+  });
+  const lab = (iso, col, text, off) => {
+    const mx = (X(iso[0][0]) + X(iso[1][0])) / 2, my = (Y(iso[0][1]) + Y(iso[1][1])) / 2;
+    ctx.font = '700 13px system-ui, sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    const tw = ctx.measureText(text).width, px = Math.min(Math.max(mx + off[0], L + 4), L + pw - tw - 4), py = Math.min(Math.max(my + off[1], T + 10), T + ph - 10);
+    ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(px - 3, py - 9, tw + 6, 18); ctx.fillStyle = col; ctx.fillText(text, px, py);
+  };
+  lab(iso1, C1, 'isoclina del conejo marrón', [10, -14]);
+  lab(iso2, C2, 'isoclina del conejo blanco', [10, 16]);
+  if ($('tEq').checked) for (const e of equilibria()) {
+    if (e.x > M || e.y > M) continue;
+    ctx.beginPath(); ctx.arc(X(e.x), Y(e.y), 7, 0, 7);
+    ctx.fillStyle = e.stable ? INK : '#fff'; ctx.fill(); ctx.lineWidth = 2.5; ctx.strokeStyle = INK; ctx.stroke();
+  }
+  const px = X(sim.N1), py = Y(sim.N2);
+  ctx.setLineDash([5, 4]); ctx.strokeStyle = 'rgba(17,24,39,.55)'; ctx.lineWidth = 1.3;
+  ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, T + ph); ctx.moveTo(px, py); ctx.lineTo(L, py); ctx.stroke(); ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(px, py, 8, 0, 7); ctx.fillStyle = PT; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = INK; ctx.stroke();
+}
+
+/* ---------------- Serie temporal ---------------- */
+function drawTime() {
+  const {ctx, w, h} = prep($('time'));
+  const L = 48, Rm = 70, T = 12, B = 32, pw = w - L - Rm, ph = h - T - B;
+  const tr = sim.traj, tMax = Math.max(15, sim.t * 1.08);
+  let nMax = Math.max(P.K1, P.K2, 1); tr.forEach(p => { nMax = Math.max(nMax, p.N1, p.N2); }); nMax *= 1.1;
+  const X = t => L + t / tMax * pw, Y = n => T + ph - n / nMax * ph;
+  ctx.strokeStyle = INK; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
+  ctx.font = '13px system-ui, sans-serif'; ctx.fillStyle = MUTED; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('tiempo', L + pw / 2, T + ph + 14);
+  const step = tMax > 150 ? 50 : tMax > 60 ? 20 : tMax > 25 ? 10 : 5;
+  for (let t = 0; t <= tMax; t += step) { ctx.fillText(fmt(t, 0), X(t), T + ph + 2); }
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText('N', L - 26, T + ph / 2);
+  ctx.fillText('0', L - 6, Y(0));
+  const kline = (K, col, t) => { ctx.setLineDash([6, 5]); ctx.strokeStyle = col; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(L, Y(K)); ctx.lineTo(L + pw, Y(K)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = col; ctx.textAlign = 'left'; ctx.font = '600 12px system-ui, sans-serif'; ctx.fillText(t, L + pw + 6, Y(K)); };
+  const close = Math.abs(Y(P.K1) - Y(P.K2)) < 14;
+  kline(P.K1, C1, 'K₁'); ctx.save(); if (close) ctx.translate(26, 0); kline(P.K2, C2, 'K₂'); ctx.restore();
+  const line = (key, col) => { ctx.strokeStyle = col; ctx.lineWidth = 3; ctx.beginPath();
+    tr.forEach((p, k) => k ? ctx.lineTo(X(p.t), Y(p[key])) : ctx.moveTo(X(p.t), Y(p[key]))); ctx.lineTo(X(sim.t), Y(sim[key])); ctx.stroke(); };
+  line('N1', C1); line('N2', C2);
+  ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(17,24,39,.4)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(sim.t), T); ctx.lineTo(X(sim.t), T + ph); ctx.stroke(); ctx.setLineDash([]);
+}
+
+/* ---------------- Todo ---------------- */
+function drawAll() {
+  if ($('viewSim').hidden) return;
+  drawSlope(); renderNiche(); renderVerdict(); drawPhase(); drawTime();
+  $('status').textContent = `t = ${fmt(sim.t)} · marrones = ${fmt(sim.N1)} · blancos = ${fmt(sim.N2)}` + (sim.done ? ' · equilibrio alcanzado' : '');
+}
+
+/* ---------------- Eventos ---------------- */
+document.querySelectorAll('[data-preset]').forEach(bt => bt.onclick = () => {
+  Object.assign(S, PRESETS[bt.dataset.preset]);
+  syncSliders(); derive();
+  setRunning(false); sim.past = [];
+  setStart(Math.round(0.2 * P.K1) || 3, Math.round(0.2 * P.K2) || 3, false);
+  renderDerived(); drawAll();
+});
+$('play').onclick = () => { if (!sim.running && sim.done) sim.done = false; setRunning(!sim.running); };
+$('reset').onclick = () => { setRunning(false); setStart(sim.start.N1, sim.start.N2, false); drawAll(); };
+$('clear').onclick = () => { sim.past = []; drawAll(); };
+$('speed').oninput = () => { $('speedOut').textContent = '×' + fmt(+$('speed').value, 1); };
+$('test1').onclick = () => { setStart(2, P.K2); setRunning(true); drawAll(); };
+$('test2').onclick = () => { setStart(P.K1, 2); setRunning(true); drawAll(); };
+['tZones', 'tArrows', 'tEq'].forEach(id => $(id).onchange = drawAll);
+$('phase').addEventListener('click', ev => {
+  if (!PH) return;
+  const r = $('phase').getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  if (x < PH.L - 10 || y > PH.T + PH.ph + 10) return;
+  const n1 = Math.max(0, (x - PH.L) / PH.pw * PH.M), n2 = Math.max(0, (PH.T + PH.ph - y) / PH.ph * PH.M);
+  setStart(n1, n2); setRunning(true); drawAll();
+});
+new ResizeObserver(() => drawAll()).observe(document.body);
+
+/* ---------------- Arranque ---------------- */
+window.__simDraw = drawAll;
+$('speedOut').textContent = '×4';
+renderSliders(); derive(); renderDerived();
+setStart(10, 10, false);
+drawAll();
+requestAnimationFrame(loop);
+})();
+</script>
+
+<script>
+/* ======== Pestaña 1: entendiendo las isoclinas de crecimiento cero ======== */
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const C1 = '#a0522d', C2 = '#2b6cb0', INK = '#111827', MUTED = '#4b5563', PT = '#facc15';
+const Z1 = 'rgba(160,82,45,.13)', Z2 = 'rgba(43,108,176,.13)';
+const fmt = (x, d = 0) => (!isFinite(x) || Math.abs(x) > 1e6) ? '∞'
+  : x.toLocaleString('es-ES', {maximumFractionDigits: d, minimumFractionDigits: 0});
+
+// Números por defecto: los del esquema de la pizarra (K₁/α por encima de K₂ y K₂/β por debajo de K₁)
+const B = {K1: 100, a: 0.8, K2: 80, b: 1.25, step: 0, pt: {N1: 30, N2: 24}};
+
+/* ---------------- La pizarra ---------------- */
+const fr = (n, d) => `<span class="fr"><span>${n}</span><span>${d}</span></span>`;
+const par = x => `<span class="par">(</span>${x}<span class="par">)</span>`;
+const tag = t => `<span class="tag">${t}</span>`;
+const PZ = [
+  {at: 0, sp: '', h: `${fr('dN', 'dt')} = rN ${par(fr('K − N', 'K'))} ${tag('competencia intraespecífica')}`},
+  {at: 1, sp: 's1', h: `${fr('dN₁', 'dt')} = r₁N₁ ${par(fr('K₁ − N₁ − <span class="box b2">αN₂</span>', 'K₁'))} ${tag('αN₂: los N₂ individuos de la especie 2, traducidos a individuos de la especie 1')}`},
+  {at: 3, sp: 's1', h: `${fr('dN₁', 'dt')} = 0 ⇒ K₁ − N₁ − αN₂ = 0 ⇒ <b>N₁ = K₁ − αN₂</b> ${tag('una recta')}`},
+  {at: 4, sp: 's1', h: `si N₂ = 0 ⇒ <b>N₁ = K₁</b>`},
+  {at: 5, sp: 's1', h: `si N₁ = 0 ⇒ 0 = K₁ − αN₂ ⇒ <b>N₂ = ${fr('K₁', 'α')}</b>`},
+  {at: 7, sp: 's1', h: `debajo: ${fr('dN₁', 'dt')} &gt; 0 <b>→</b> &nbsp; encima: ${fr('dN₁', 'dt')} &lt; 0 <b>←</b>`},
+  {at: 8, sp: 's2', h: `${fr('dN₂', 'dt')} = r₂N₂ ${par(fr('K₂ − N₂ − <span class="box b1">βN₁</span>', 'K₂'))} ${tag('βN₁: los N₁ individuos de la especie 1, traducidos a individuos de la especie 2')}`},
+  {at: 8, sp: 's2', h: `${fr('dN₂', 'dt')} = 0 ⇒ <b>N₂ = K₂ − βN₁</b> ${tag('otra recta')}`},
+  {at: 9, sp: 's2', h: `si N₁ = 0 ⇒ <b>N₂ = K₂</b> &nbsp; · &nbsp; si N₂ = 0 ⇒ <b>N₁ = ${fr('K₂', 'β')}</b>`},
+  {at: 10, sp: 's2', h: `debajo: ${fr('dN₂', 'dt')} &gt; 0 <b>↑</b> &nbsp; encima: ${fr('dN₂', 'dt')} &lt; 0 <b>↓</b>`},
+];
+
+/* ---------------- Los pasos ---------------- */
+// Banderas del dibujo: log0/log1 = N frente a t; plane = plano N₁–N₂; pt = punto de ejemplo;
+// p1a (K₁), p1b (K₁/α), l1 (isoclina 1), z1 (zonas y flechas 1); lo mismo con 2; comb = flechas sumadas;
+// r1/r2 = valor del paréntesis en el punto.
+const STEPS = [
+  {f: 'log0', t: 'Partimos de la competencia dentro de una especie',
+   x: 'La ecuación logística: la población crece mientras N es menor que K y se frena al acercarse a K. La especie compite consigo misma: es competencia <b>intraespecífica</b>.'},
+  {f: 'log1', t: 'Añadimos la otra especie',
+   x: 'Para la especie 1, los individuos de la especie 2 también consumen recursos. Restamos αN₂: es la competencia <b>interespecífica</b>. α es lo que vale un individuo de la especie 2 contado en individuos de la especie 1, así que αN₂ son los N₂ rivales traducidos a individuos de la especie 1. Por eso se pueden restar de K₁. En la gráfica, si hay individuos de la especie 2, la especie 1 se estanca antes: en K₁ − αN₂.'
+    + '<ul><li><b>α &lt; 1</b>: un individuo de la especie 2 frena a la especie 1 menos que uno propio. Pesa más la competencia dentro de la especie que con la otra.</li>'
+    + '<li><b>α = 1</b>: frena lo mismo que uno propio. A la especie 1 le da igual de qué especie sea el vecino.</li>'
+    + '<li><b>α &gt; 1</b>: frena más que uno propio. Pesa más la competencia con la otra especie que dentro de la propia.</li></ul>',
+   n: 'Prueba a mover α en «Cambiar los números del ejemplo» y mira dónde se estanca la especie 1.'},
+  {f: 'plane pt', t: 'Un plano para las dos especies a la vez',
+   x: 'Dejamos el tiempo y miramos las dos poblaciones a la vez. En el eje horizontal va N₁ y en el vertical, N₂. Cada punto del plano es una situación: tantos individuos de una especie y tantos de la otra.',
+   n: 'Haz clic en el plano para mover el punto amarillo.'},
+  {f: 'plane pt r1', t: '¿Cuándo deja de crecer la especie 1?',
+   x: 'Cuando dN₁/dt = 0, es decir, cuando el paréntesis vale cero: K₁ − N₁ − αN₂ = 0. Despejando, N₁ = K₁ − αN₂. Es la ecuación de una recta, y para dibujar una recta bastan dos puntos.'},
+  {f: 'plane pt r1 p1a', t: 'Primer punto: no hay especie 2',
+   x: 'Si N₂ = 0, la ecuación queda N₁ = K₁: la especie 1 sola se para en su capacidad de carga. Es el corte con el eje horizontal.'},
+  {f: 'plane pt r1 p1a p1b', t: 'Segundo punto: no hay especie 1',
+   x: 'Si N₁ = 0, queda 0 = K₁ − αN₂, es decir, N₂ = K₁/α. Es el número de individuos de la especie 2 que bastan, ellos solos, para frenar del todo a la especie 1. Es el corte con el eje vertical. Si α < 1, hacen falta más de K₁; si α > 1, bastan menos.'},
+  {f: 'plane pt r1 p1a p1b l1', t: 'La isoclina de crecimiento cero de la especie 1',
+   x: 'Unimos los dos puntos. En cualquier punto de esta línea, la especie 1 ni crece ni decrece: por eso se llama isoclina de crecimiento cero.'},
+  {f: 'plane pt r1 p1a p1b l1 z1', t: 'A un lado y a otro de la línea',
+   x: 'Debajo de la línea, dN₁/dt > 0: N₁ aumenta y las flechas van hacia la derecha, porque N₁ está en el eje horizontal. Encima, dN₁/dt < 0 y van hacia la izquierda. La especie 1 solo mueve el punto en horizontal: no controla N₂.'},
+  {f: 'plane pt r2', t: 'Lo mismo con la especie 2',
+   x: 'Repetimos con la ecuación de la especie 2. Ahora es la especie 1 la que le resta recursos: βN₁. β dice cuánto pesa un individuo de la especie 1 para la especie 2. Igualando a cero sale N₂ = K₂ − βN₁, otra recta.'},
+  {f: 'plane pt r2 p2a p2b l2', t: 'Los dos puntos y la isoclina de la especie 2',
+   x: 'Si N₁ = 0, N₂ = K₂: corte con el eje vertical. Si N₂ = 0, N₁ = K₂/β: corte con el eje horizontal, el número de individuos de la especie 1 que bastan para frenar del todo a la especie 2. Al unirlos tenemos la isoclina de crecimiento cero de la especie 2.'},
+  {f: 'plane pt r2 p2a p2b l2 z2', t: 'A un lado y a otro de la línea de la especie 2',
+   x: 'Debajo de su línea, la especie 2 crece: flechas hacia arriba, porque N₂ está en el eje vertical. Encima, decrece: flechas hacia abajo. La especie 2 solo mueve el punto en vertical.'},
+  {f: 'plane pt r1 r2 p1a p1b l1 z1 p2a p2b l2 z2', t: 'Las dos gráficas juntas',
+   x: 'Superponemos las dos isoclinas en el mismo plano. En cada punto actúan a la vez las dos especies: la 1 empuja en horizontal y la 2, en vertical.'},
+  {f: 'plane pt r1 r2 p1a p1b l1 z1 p2a p2b l2 z2 comb', t: 'Sumamos las flechas',
+   x: 'En cada zona del plano, las dos flechas se combinan en una sola, que indica hacia dónde va el sistema desde allí. Qué pasa al final depende de cómo se sitúen las dos líneas. Hay cuatro posibilidades, y las vemos en el simulador.',
+   n: '<button id="bGoSim">Ir al simulador →</button>'},
+];
+const flags = st => Object.fromEntries(st.f.split(' ').map(k => [k, true]));
+
+/* ---------------- Utilidades de canvas ---------------- */
+function prep(cv) {
+  const dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) {
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  }
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+  return {ctx, w, h};
+}
+function arrow(ctx, x0, y0, x1, y1, hs) {
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+  const ang = Math.atan2(y1 - y0, x1 - x0);
+  ctx.beginPath(); ctx.moveTo(x1, y1);
+  ctx.lineTo(x1 - hs * Math.cos(ang - 0.45), y1 - hs * Math.sin(ang - 0.45));
+  ctx.lineTo(x1 - hs * Math.cos(ang + 0.45), y1 - hs * Math.sin(ang + 0.45));
+  ctx.closePath(); ctx.fill();
+}
+function textBox(ctx, text, x, y, col, align = 'left') {
+  ctx.textAlign = align; ctx.textBaseline = 'middle';
+  const tw = ctx.measureText(text).width, x0 = align === 'left' ? x : align === 'right' ? x - tw : x - tw / 2;
+  ctx.fillStyle = 'rgba(255,255,255,.88)'; ctx.fillRect(x0 - 4, y - 10, tw + 8, 20);
+  ctx.fillStyle = col; ctx.fillText(text, x, y);
+}
+
+/* ---------------- N frente al tiempo (pasos 1 y 2) ---------------- */
+function drawLog(ctx, w, h, f) {
+  const {K1, a} = B;
+  const L = 54, R = Math.min(190, w * 0.34), T = 18, Bm = 44, pw = w - L - R, ph = h - T - Bm;
+  const tMax = 12, nMax = 1.15 * K1;
+  const X = t => L + t / tMax * pw, Y = n => T + ph - n / nMax * ph;
+  ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
+  ctx.fillStyle = INK; ctx.font = '600 14px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('tiempo', L + pw / 2, h - 12);
+  ctx.save(); ctx.translate(16, T + ph / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillText(f.log0 ? 'N (individuos)' : 'N₁ (individuos de la especie 1)', 0, 0); ctx.restore();
+  const logi = (K, N0) => t => K / (1 + (K - N0) / N0 * Math.exp(-t));
+  const curve = (fn, col, lw, dash) => {
+    ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.setLineDash(dash || []); ctx.beginPath();
+    for (let k = 0; k <= 200; k++) { const t = k / 200 * tMax; k ? ctx.lineTo(X(t), Y(fn(t))) : ctx.moveTo(X(t), Y(fn(t))); }
+    ctx.stroke(); ctx.setLineDash([]);
+  };
+  const kline = (v, col, lines) => {
+    ctx.setLineDash([6, 5]); ctx.strokeStyle = col; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(L + pw, Y(v)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = col; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    lines.forEach((s, k) => { ctx.font = (k ? '' : '600 ') + '13px system-ui, sans-serif'; ctx.fillText(s, L + pw + 8, Y(v) + (k - (lines.length - 1) / 2) * 16); });
+  };
+  const N0 = 0.03 * K1;
+  if (f.log0) {
+    curve(logi(K1, N0), INK, 3.5);
+    kline(K1, INK, ['K: capacidad de carga', `= ${fmt(K1)}`]);
+    ctx.font = '600 14px system-ui, sans-serif'; textBox(ctx, 'crece rápido', X(3.2) + 10, Y(logi(K1, N0)(3.2)), INK);
+    textBox(ctx, 'se frena', X(8.5), Y(K1) + 22, INK, 'center');
+  } else {
+    const N2f = Math.max(5, 5 * Math.round(0.3 * K1 / 5)), Ke = K1 - a * N2f;
+    curve(logi(K1, N0), 'rgba(160,82,45,.45)', 2.2, [7, 5]);
+    curve(logi(Ke, N0), C1, 3.5);
+    kline(K1, 'rgba(160,82,45,.65)', ['K₁ (sin especie 2)', `= ${fmt(K1)}`]);
+    kline(Ke, C1, ['K₁ − αN₂', `= ${fmt(K1)} − ${fmt(a, 2)}·${fmt(N2f)}`, `= ${fmt(Ke, 1)}`]);
+    ctx.font = '600 14px system-ui, sans-serif';
+    textBox(ctx, `con N₂ = ${fmt(N2f)} individuos de la especie 2,`, X(5.5), Y(Ke) + 26, C1, 'center');
+    textBox(ctx, `que pesan como αN₂ = ${fmt(a * N2f, 1)} de la especie 1`, X(5.5), Y(Ke) + 48, C1, 'center');
+  }
+  ctx.fillStyle = MUTED; ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText('0', L - 6, Y(0));
+}
+
+/* ---------------- Plano N₁–N₂ ---------------- */
+let G = null;
+function drawPlane(ctx, w, h, f) {
+  const {K1, a, K2, b} = B, cap = 3 * Math.max(K1, K2);
+  const I1 = K1 / a, I2 = K2 / b;
+  const M = 1.12 * Math.max(K1, K2, Math.min(I1, cap), Math.min(I2, cap), B.pt.N1, B.pt.N2);
+  const L = 70, R = 18, T = 16, Bm = 62, pw = w - L - R, ph = h - T - Bm;
+  const X = v => L + v / M * pw, Y = v => T + ph - v / M * ph;
+  G = {L, T, pw, ph, M};
+  const iso1 = [[K1, 0], a * M < K1 ? [K1 - a * M, M] : [0, I1]];
+  const iso2 = [[0, K2], b * M < K2 ? [M, K2 - b * M] : [I2, 0]];
+  const poly = pts => { ctx.beginPath(); pts.forEach((p, k) => k ? ctx.lineTo(X(p[0]), Y(p[1])) : ctx.moveTo(X(p[0]), Y(p[1]))); ctx.closePath(); ctx.fill(); };
+
+  ctx.save(); ctx.beginPath(); ctx.rect(L, T, pw, ph); ctx.clip();
+  if (f.z1) { ctx.fillStyle = Z1; poly([[0, 0], iso1[0], iso1[1], [0, iso1[1][1]]]); }
+  if (f.z2) { ctx.fillStyle = Z2; poly([[0, 0], iso2[0], iso2[1], [iso2[1][0], 0]]); }
+
+  // flechas
+  const n = 6, cell = Math.min(pw, ph) / n, len = cell * 0.38, tol = 0.04 * M, both = f.z1 && f.z2;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    const n1 = (i + 0.5) / n * M, n2 = (j + 0.5) / n * M, cx = X(n1), cy = Y(n2);
+    const F1 = K1 - n1 - a * n2, F2 = K2 - n2 - b * n1;
+    const near1 = Math.abs(F1) / Math.hypot(1, a) < tol, near2 = Math.abs(F2) / Math.hypot(1, b) < tol;
+    const s1 = Math.sign(F1), s2 = Math.sign(F2);
+    ctx.lineWidth = 2.2;
+    if (f.comb) {
+      if (near1 || near2) continue;
+      ctx.strokeStyle = ctx.fillStyle = 'rgba(160,82,45,.32)'; arrow(ctx, cx, cy, cx + s1 * len, cy, 6);
+      ctx.strokeStyle = ctx.fillStyle = 'rgba(43,108,176,.32)'; arrow(ctx, cx, cy, cx, cy - s2 * len, 6);
+      ctx.strokeStyle = ctx.fillStyle = INK; ctx.lineWidth = 2.8; arrow(ctx, cx, cy, cx + s1 * len, cy - s2 * len, 8);
+    } else if (both) {
+      if (!near1) { ctx.strokeStyle = ctx.fillStyle = C1; arrow(ctx, cx, cy, cx + s1 * len, cy, 7); }
+      if (!near2) { ctx.strokeStyle = ctx.fillStyle = C2; arrow(ctx, cx, cy, cx, cy - s2 * len, 7); }
+    } else if (f.z1 && !near1) {
+      ctx.strokeStyle = ctx.fillStyle = C1; arrow(ctx, cx - s1 * len / 2, cy, cx + s1 * len / 2, cy, 7);
+    } else if (f.z2 && !near2) {
+      ctx.strokeStyle = ctx.fillStyle = C2; arrow(ctx, cx, cy + s2 * len / 2, cx, cy - s2 * len / 2, 7);
+    }
+  }
+  // isoclinas
+  ctx.lineWidth = 4.5; ctx.lineCap = 'round';
+  if (f.l1) { ctx.strokeStyle = C1; ctx.beginPath(); ctx.moveTo(X(iso1[0][0]), Y(iso1[0][1])); ctx.lineTo(X(iso1[1][0]), Y(iso1[1][1])); ctx.stroke(); }
+  if (f.l2) { ctx.strokeStyle = C2; ctx.beginPath(); ctx.moveTo(X(iso2[0][0]), Y(iso2[0][1])); ctx.lineTo(X(iso2[1][0]), Y(iso2[1][1])); ctx.stroke(); }
+  // rótulos de zona (cuando hay una sola especie)
+  ctx.font = '600 14px system-ui, sans-serif';
+  if (f.z1 && !f.z2) {
+    textBox(ctx, 'dN₁/dt > 0: N₁ crece', X(0.04 * M), Y(0.12 * Math.min(I1, M)), C1);
+    textBox(ctx, 'dN₁/dt < 0: N₁ decrece', X(0.97 * M), Y(0.94 * M), C1, 'right');
+  }
+  if (f.z2 && !f.z1) {
+    textBox(ctx, 'dN₂/dt > 0: N₂ crece', X(0.04 * M), Y(0.12 * Math.min(K2, M)), C2);
+    textBox(ctx, 'dN₂/dt < 0: N₂ decrece', X(0.97 * M), Y(0.94 * M), C2, 'right');
+  }
+  if (f.l1 && !f.z2) textBox(ctx, 'isoclina de la especie 1: dN₁/dt = 0', X((iso1[0][0] + iso1[1][0]) / 2) + 12, Y((iso1[0][1] + iso1[1][1]) / 2) - 4, C1);
+  if (f.l2 && !f.z1) textBox(ctx, 'isoclina de la especie 2: dN₂/dt = 0', X((iso2[0][0] + iso2[1][0]) / 2) + 12, Y((iso2[0][1] + iso2[1][1]) / 2) - 4, C2);
+  ctx.restore();
+
+  // ejes
+  ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
+  ctx.fillStyle = INK; ctx.font = '600 14px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.fillText('N₁ (individuos de la especie 1)', L + pw / 2, h - 8);
+  ctx.save(); ctx.translate(15, T + ph / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('N₂ (individuos de la especie 2)', 0, 0); ctx.restore();
+
+  // punto de ejemplo
+  if (f.pt) {
+    const px = X(B.pt.N1), py = Y(B.pt.N2);
+    ctx.setLineDash([5, 4]); ctx.strokeStyle = 'rgba(17,24,39,.55)'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, T + ph); ctx.moveTo(px, py); ctx.lineTo(L, py); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(px, py, 8, 0, 7); ctx.fillStyle = PT; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = INK; ctx.stroke();
+    ctx.font = '600 13px system-ui, sans-serif';
+    const right = px < L + pw - 150;
+    textBox(ctx, `(${fmt(B.pt.N1)} ; ${fmt(B.pt.N2)})`, px + (right ? 14 : -14), py - 16, INK, right ? 'left' : 'right');
+  }
+
+  // cortes con los ejes
+  const xt = [], yt = [];
+  if (f.p1a) xt.push({v: K1, s: 'K₁', c: C1});
+  if (f.p2b) xt.push({v: I2, s: 'K₂/β', c: C2});
+  if (f.p1b) yt.push({v: I1, s: 'K₁/α', c: C1});
+  if (f.p2a) yt.push({v: K2, s: 'K₂', c: C2});
+  const dot = (x, y, c) => { ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.fillStyle = c; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#fff'; ctx.stroke(); };
+  xt.sort((p, q) => p.v - q.v).forEach((p, k) => {
+    const inside = p.v <= M, x = inside ? X(p.v) : L + pw - 4;
+    const dy = (k > 0 && Math.abs(x - X(Math.min(xt[k - 1].v, M))) < 75) ? 18 : 0;
+    ctx.font = '700 14px system-ui, sans-serif'; ctx.fillStyle = p.c; ctx.textAlign = inside ? 'center' : 'right'; ctx.textBaseline = 'top';
+    ctx.fillText(`${p.s} = ${fmt(p.v)}${inside ? '' : ' →'}`, x, T + ph + 8 + dy);
+    if (inside) dot(x, T + ph, p.c);
+  });
+  yt.sort((p, q) => p.v - q.v).forEach((p, k) => {
+    const inside = p.v <= M, y = inside ? Y(p.v) : T + 8;
+    const dy = (k > 0 && Math.abs(y - Y(Math.min(yt[k - 1].v, M))) < 34) ? -30 : 0;
+    ctx.fillStyle = p.c; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.font = '700 14px system-ui, sans-serif'; ctx.fillText(p.s + (inside ? '' : ' ↑'), L - 9, y - 8 + dy);
+    ctx.font = '600 13px system-ui, sans-serif'; ctx.fillText(fmt(p.v), L - 9, y + 8 + dy);
+    if (inside) dot(L, y, p.c);
+  });
+}
+
+/* ---------------- Lectura del punto ---------------- */
+function readout(f) {
+  const el = $('bRead');
+  if (!f.plane) { el.innerHTML = ''; return; }
+  const {K1, a, K2, b} = B, {N1, N2} = B.pt;
+  const msg = (F, K, i) => {
+    const tol = 0.01 * K;
+    return F > tol ? `positivo: dN${i}/dt > 0 → <span class="grow">la especie ${i} crece</span>`
+      : F < -tol ? `negativo: dN${i}/dt < 0 → <span class="shrink">la especie ${i} decrece</span>`
+      : `cero: <span class="still">justo sobre su isoclina</span>`;
+  };
+  const sub = i => i === 1 ? '₁' : '₂';
+  let s = `<div>Punto amarillo: N₁ = <b>${fmt(N1)}</b>, N₂ = <b>${fmt(N2)}</b></div>`;
+  if (f.r1) { const F = K1 - N1 - a * N2;
+    s += `<div><span class="sp1">Especie 1</span>: K₁ − N₁ − αN₂ = ${fmt(K1)} − ${fmt(N1)} − ${fmt(a, 2)}·${fmt(N2)} = <b>${fmt(F, 1)}</b>, ${msg(F, K1, sub(1))}</div>`; }
+  if (f.r2) { const F = K2 - N2 - b * N1;
+    s += `<div><span class="sp2">Especie 2</span>: K₂ − N₂ − βN₁ = ${fmt(K2)} − ${fmt(N2)} − ${fmt(b, 2)}·${fmt(N1)} = <b>${fmt(F, 1)}</b>, ${msg(F, K2, sub(2))}</div>`; }
+  el.innerHTML = s.replace(/la especie ₁/g, 'la especie 1').replace(/la especie ₂/g, 'la especie 2');
+}
+
+/* ---------------- Render ---------------- */
+function render() {
+  const st = STEPS[B.step], n = STEPS.length;
+  $('bTitle').innerHTML = `<small>Paso ${B.step + 1} de ${n}</small>${st.t}`;
+  $('bPz').innerHTML = PZ.filter(l => l.at <= B.step)
+    .map(l => `<div class="ln ${l.sp}${l.at === B.step ? ' now' : ''}">${l.h}</div>`).join('');
+  $('bExpl').innerHTML = st.x;
+  $('bNote').innerHTML = st.n || '';
+  $('bNote').hidden = !st.n;
+  $('bPrev').disabled = B.step === 0; $('bNext').disabled = B.step === n - 1;
+  [...$('bDots').children].forEach((d, k) => { d.className = k === B.step ? 'on' : k < B.step ? 'past' : ''; });
+  const go = $('bGoSim'); if (go) go.onclick = () => show('sim');
+  // K₂ y β no influyen hasta que entra la especie 2 (paso 9)
+  SL.forEach(s => { if (s.k === 'K2' || s.k === 'b') s.el.hidden = B.step < 8; });
+  draw();
+}
+function draw() {
+  if ($('viewBuild').hidden) return;
+  const f = flags(STEPS[B.step]), {ctx, w, h} = prep($('bcv'));
+  if (f.plane) drawPlane(ctx, w, h, f); else drawLog(ctx, w, h, f);
+  readout(f);
+  $('bcv').style.cursor = f.plane ? 'crosshair' : 'default';
+}
+const goto = k => { B.step = Math.max(0, Math.min(STEPS.length - 1, k)); render(); };
+
+/* ---------------- Controles ---------------- */
+STEPS.forEach((s, k) => {
+  const d = document.createElement('button'); d.title = `Paso ${k + 1}: ${s.t}`; d.setAttribute('aria-label', d.title);
+  d.onclick = () => goto(k); $('bDots').appendChild(d);
+});
+$('bPrev').onclick = () => goto(B.step - 1);
+$('bNext').onclick = () => goto(B.step + 1);
+document.addEventListener('keydown', ev => {
+  if ($('viewBuild').hidden || ev.target.tagName === 'INPUT' || ev.target.tagName === 'SUMMARY') return;
+  if (ev.target.tagName === 'BUTTON' && (ev.key === ' ' || ev.key === 'Enter')) return;
+  if (['ArrowRight', 'PageDown', ' '].includes(ev.key)) { ev.preventDefault(); goto(B.step + 1); }
+  else if (['ArrowLeft', 'PageUp'].includes(ev.key)) { ev.preventDefault(); goto(B.step - 1); }
+});
+$('bcv').addEventListener('click', ev => {
+  if (!G || !flags(STEPS[B.step]).plane) return;
+  const r = $('bcv').getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  if (x < G.L || y > G.T + G.ph) return;
+  B.pt = {N1: Math.round((x - G.L) / G.pw * G.M), N2: Math.round((G.T + G.ph - y) / G.ph * G.M)};
+  draw();
+});
+const SL = [
+  {k: 'K1', l: '<span class="sp1">K₁</span>', min: 20, max: 200, step: 5, d: 0},
+  {k: 'a', l: '<span class="sp1">α</span> (efecto de la sp. 2 sobre la sp. 1)', min: 0.2, max: 2.5, step: 0.05, d: 2},
+  {k: 'K2', l: '<span class="sp2">K₂</span>', min: 20, max: 200, step: 5, d: 0},
+  {k: 'b', l: '<span class="sp2">β</span> (efecto de la sp. 1 sobre la sp. 2)', min: 0.2, max: 2.5, step: 0.05, d: 2},
+];
+for (const s of SL) {
+  const w = document.createElement('div'); w.className = 'slider';
+  w.innerHTML = `<label><span>${s.l}</span><output>${fmt(B[s.k], s.d)}</output></label><input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${B[s.k]}">`;
+  const inp = w.querySelector('input'), out = w.querySelector('output');
+  inp.oninput = () => { B[s.k] = +inp.value; out.textContent = fmt(B[s.k], s.d); draw(); };
+  $('bSliders').appendChild(w); s.el = w;
+}
+
+/* ---------------- Pestañas ---------------- */
+function show(v) {
+  const b = v === 'build';
+  $('viewBuild').hidden = !b; $('viewSim').hidden = b; $('simCtrls').hidden = b;
+  $('vBuild').classList.toggle('on', b); $('vSim').classList.toggle('on', !b);
+  try { history.replaceState(null, '', b ? '#isoclinas' : '#simulador'); } catch (e) {}
+  if (b) draw(); else if (window.__simDraw) window.__simDraw();
+}
+$('vBuild').onclick = () => show('build');
+$('vSim').onclick = () => show('sim');
+new ResizeObserver(() => draw()).observe(document.body);
+
+show(location.hash === '#simulador' ? 'sim' : 'build');
+render();
+})();
+</script>
+</body>
+</html>

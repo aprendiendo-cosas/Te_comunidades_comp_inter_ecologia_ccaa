@@ -660,14 +660,14 @@ const tag = t => `<span class="tag">${t}</span>`;
 const PZ = [
   {at: 0, sp: '', h: `${fr('dN', 'dt')} = rN ${par(fr('K − N', 'K'))} ${tag('competencia intraespecífica')}`},
   {at: 1, sp: 's1', h: `${fr('dN₁', 'dt')} = r₁N₁ ${par(fr('K₁ − N₁ − <span class="box b2">αN₂</span>', 'K₁'))} ${tag('αN₂: los N₂ individuos de la especie 2, traducidos a individuos de la especie 1')}`},
-  {at: 3, sp: 's2', h: `${fr('dN₂', 'dt')} = r₂N₂ ${par(fr('K₂ − N₂ − <span class="box b1">βN₁</span>', 'K₂'))} ${tag('βN₁: los N₁ individuos de la especie 1, traducidos a individuos de la especie 2')}`},
-  {at: 4, sp: 's1', h: `${fr('dN₁', 'dt')} = 0 ⇒ K₁ − N₁ − αN₂ = 0 ⇒ <b>N₁ = K₁ − αN₂</b> ${tag('una recta')}`},
-  {at: 5, sp: 's1', h: `si N₂ = 0 ⇒ <b>N₁ = K₁</b>`},
-  {at: 6, sp: 's1', h: `si N₁ = 0 ⇒ 0 = K₁ − αN₂ ⇒ <b>N₂ = ${fr('K₁', 'α')}</b>`},
-  {at: 8, sp: 's1', h: `debajo: ${fr('dN₁', 'dt')} &gt; 0 <b>→</b> &nbsp; encima: ${fr('dN₁', 'dt')} &lt; 0 <b>←</b>`},
-  {at: 9, sp: 's2', h: `${fr('dN₂', 'dt')} = 0 ⇒ K₂ − N₂ − βN₁ = 0 ⇒ <b>N₂ = K₂ − βN₁</b> ${tag('otra recta')}`},
-  {at: 10, sp: 's2', h: `si N₁ = 0 ⇒ <b>N₂ = K₂</b> &nbsp; · &nbsp; si N₂ = 0 ⇒ <b>N₁ = ${fr('K₂', 'β')}</b>`},
-  {at: 11, sp: 's2', h: `debajo: ${fr('dN₂', 'dt')} &gt; 0 <b>↑</b> &nbsp; encima: ${fr('dN₂', 'dt')} &lt; 0 <b>↓</b>`},
+  {at: 2, sp: 's2', h: `${fr('dN₂', 'dt')} = r₂N₂ ${par(fr('K₂ − N₂ − <span class="box b1">βN₁</span>', 'K₂'))} ${tag('βN₁: los N₁ individuos de la especie 1, traducidos a individuos de la especie 2')}`},
+  {at: 3, sp: 's1', h: `${fr('dN₁', 'dt')} = 0 ⇒ K₁ − N₁ − αN₂ = 0 ⇒ <b>N₁ = K₁ − αN₂</b> ${tag('una recta')}`},
+  {at: 4, sp: 's1', h: `si N₂ = 0 ⇒ <b>N₁ = K₁</b>`},
+  {at: 5, sp: 's1', h: `si N₁ = 0 ⇒ 0 = K₁ − αN₂ ⇒ <b>N₂ = ${fr('K₁', 'α')}</b>`},
+  {at: 7, sp: 's1', h: `debajo: ${fr('dN₁', 'dt')} &gt; 0 <b>→</b> &nbsp; encima: ${fr('dN₁', 'dt')} &lt; 0 <b>←</b>`},
+  {at: 8, sp: 's2', h: `${fr('dN₂', 'dt')} = 0 ⇒ K₂ − N₂ − βN₁ = 0 ⇒ <b>N₂ = K₂ − βN₁</b> ${tag('otra recta')}`},
+  {at: 9, sp: 's2', h: `si N₁ = 0 ⇒ <b>N₂ = K₂</b> &nbsp; · &nbsp; si N₂ = 0 ⇒ <b>N₁ = ${fr('K₂', 'β')}</b>`},
+  {at: 10, sp: 's2', h: `debajo: ${fr('dN₂', 'dt')} &gt; 0 <b>↑</b> &nbsp; encima: ${fr('dN₂', 'dt')} &lt; 0 <b>↓</b>`},
 ];
 
 /* ---------------- Los pasos ---------------- */
@@ -683,17 +683,16 @@ const STEPS = [
     + '<li><b>α = 1</b>: frena lo mismo que uno propio. A la especie 1 le da igual de qué especie sea el vecino.</li>'
     + '<li><b>α &gt; 1</b>: frena más que uno propio. Pesa más la competencia con la otra especie que dentro de la propia.</li></ul>',
    n: 'Prueba a mover α en «Cambiar los números del ejemplo» y mira dónde se estanca la especie 1.'},
-  {f: 'plane pt', t: 'Un plano para las dos especies a la vez',
-   x: 'Dejamos el tiempo y miramos las dos poblaciones a la vez. En el eje horizontal va N₁ y en el vertical, N₂. Cada punto del plano es una situación: tantos individuos de una especie y tantos de la otra.',
-   n: 'Haz clic en el plano para mover el punto amarillo.'},
-  {f: 'plane pt', t: 'La especie 2 también compite con la 1',
+  {f: 'log2', t: 'La especie 2 también compite con la 1',
    x: 'La especie 2 tiene su propia ecuación, con la misma forma. Ahora es la especie 1 la que le quita recursos: restamos βN₁. β es lo que vale un individuo de la especie 1 contado en individuos de la especie 2, así que βN₁ son los N₁ rivales traducidos a individuos de la especie 2. α y β no tienen por qué valer lo mismo: cada especie puede frenar a la otra con distinta fuerza.'
     + '<ul><li><b>β &lt; 1</b>: un individuo de la especie 1 frena a la especie 2 menos que uno propio.</li>'
     + '<li><b>β = 1</b>: frena lo mismo que uno propio.</li>'
     + '<li><b>β &gt; 1</b>: frena más que uno propio.</li></ul>'
     + 'Con las dos ecuaciones a la vista, buscamos dónde deja de crecer cada especie.'},
-  {f: 'plane pt r1', t: '¿Cuándo deja de crecer la especie 1?',
-   x: 'Cuando dN₁/dt = 0, es decir, cuando el paréntesis vale cero: K₁ − N₁ − αN₂ = 0. Despejando, N₁ = K₁ − αN₂. Es la ecuación de una recta, y para dibujar una recta bastan dos puntos.'},
+  {f: 'plane pt r1', t: 'Un plano para las dos especies: ¿cuándo deja de crecer la especie 1?',
+   x: 'Dejamos el tiempo y miramos las dos poblaciones a la vez. En el eje horizontal va N₁ y en el vertical, N₂. Cada punto del plano es una situación: tantos individuos de una especie y tantos de la otra.<br><br>'
+    + 'En ese plano buscamos dónde deja de crecer la especie 1: cuando dN₁/dt = 0, es decir, cuando el paréntesis vale cero: K₁ − N₁ − αN₂ = 0. Despejando, N₁ = K₁ − αN₂. Es la ecuación de una recta, y para dibujar una recta bastan dos puntos.',
+   n: 'Haz clic en el plano para mover el punto amarillo.'},
   {f: 'plane pt r1 p1a', t: 'Primer punto: no hay especie 2',
    x: 'Si N₂ = 0, la ecuación queda N₁ = K₁: la especie 1 sola se para en su capacidad de carga. Es el corte con el eje horizontal.'},
   {f: 'plane pt r1 p1a p1b', t: 'Segundo punto: no hay especie 1',
@@ -703,7 +702,7 @@ const STEPS = [
   {f: 'plane pt r1 p1a p1b l1 z1', t: 'A un lado y a otro de la línea',
    x: 'Debajo de la línea, dN₁/dt > 0: N₁ aumenta y las flechas van hacia la derecha, porque N₁ está en el eje horizontal. Encima, dN₁/dt < 0 y van hacia la izquierda. La especie 1 solo mueve el punto en horizontal: no controla N₂.'},
   {f: 'plane pt r2', t: 'Lo mismo con la especie 2',
-   x: 'Volvemos a la ecuación de la especie 2 (paso 4) y hacemos lo mismo: dN₂/dt = 0 cuando el paréntesis vale cero, K₂ − N₂ − βN₁ = 0. Despejando, N₂ = K₂ − βN₁: otra recta.'},
+   x: 'Volvemos a la ecuación de la especie 2 (paso 3) y hacemos lo mismo: dN₂/dt = 0 cuando el paréntesis vale cero, K₂ − N₂ − βN₁ = 0. Despejando, N₂ = K₂ − βN₁: otra recta.'},
   {f: 'plane pt r2 p2a p2b l2', t: 'Los dos puntos y la isoclina de la especie 2',
    x: 'Si N₁ = 0, N₂ = K₂: corte con el eje vertical. Si N₂ = 0, N₁ = K₂/β: corte con el eje horizontal, el número de individuos de la especie 1 que bastan para frenar del todo a la especie 2. Al unirlos tenemos la isoclina de crecimiento cero de la especie 2.'},
   {f: 'plane pt r2 p2a p2b l2 z2', t: 'A un lado y a otro de la línea de la especie 2',
@@ -745,13 +744,13 @@ function textBox(ctx, text, x, y, col, align = 'left') {
 function drawLog(ctx, w, h, f) {
   const {K1, a} = B;
   const L = 54, R = Math.min(190, w * 0.34), T = 18, Bm = 44, pw = w - L - R, ph = h - T - Bm;
-  const tMax = 12, nMax = 1.15 * K1;
+  const tMax = 12, nMax = 1.15 * (f.log2 ? B.K2 : K1);
   const X = t => L + t / tMax * pw, Y = n => T + ph - n / nMax * ph;
   ctx.strokeStyle = INK; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(L, T); ctx.lineTo(L, T + ph); ctx.lineTo(L + pw, T + ph); ctx.stroke();
   ctx.fillStyle = INK; ctx.font = '600 14px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
   ctx.fillText('tiempo', L + pw / 2, h - 12);
   ctx.save(); ctx.translate(16, T + ph / 2); ctx.rotate(-Math.PI / 2);
-  ctx.fillText(f.log0 ? 'N (individuos)' : 'N₁ (individuos de la especie 1)', 0, 0); ctx.restore();
+  ctx.fillText(f.log0 ? 'N (individuos)' : f.log2 ? 'N₂ (individuos de la especie 2)' : 'N₁ (individuos de la especie 1)', 0, 0); ctx.restore();
   const logi = (K, N0) => t => K / (1 + (K - N0) / N0 * Math.exp(-t));
   const curve = (fn, col, lw, dash) => {
     ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.setLineDash(dash || []); ctx.beginPath();
@@ -771,14 +770,17 @@ function drawLog(ctx, w, h, f) {
     ctx.font = '600 14px system-ui, sans-serif'; textBox(ctx, 'crece rápido', X(3.2) + 10, Y(logi(K1, N0)(3.2)), INK);
     textBox(ctx, 'se frena', X(8.5), Y(K1) + 22, INK, 'center');
   } else {
-    const N2f = Math.max(5, 5 * Math.round(0.3 * K1 / 5)), Ke = K1 - a * N2f;
-    curve(logi(K1, N0), 'rgba(160,82,45,.45)', 2.2, [7, 5]);
-    curve(logi(Ke, N0), C1, 3.5);
-    kline(K1, 'rgba(160,82,45,.65)', ['K₁ (sin especie 2)', `= ${fmt(K1)}`]);
-    kline(Ke, C1, ['K₁ − αN₂', `= ${fmt(K1)} − ${fmt(a, 2)}·${fmt(N2f)}`, `= ${fmt(Ke, 1)}`]);
+    // especie que crece (i) y especie rival (j)
+    const two = f.log2, K = two ? B.K2 : K1, c = two ? B.b : a, col = two ? C2 : C1, soft = two ? '43,108,176' : '160,82,45';
+    const i = two ? '₂' : '₁', j = two ? '₁' : '₂', ni = two ? 2 : 1, nj = two ? 1 : 2, cs = two ? 'β' : 'α';
+    const Nf = Math.max(5, 5 * Math.round(0.3 * K / 5)), Ke = K - c * Nf;
+    curve(logi(K, N0), `rgba(${soft},.45)`, 2.2, [7, 5]);
+    curve(logi(Ke, N0), col, 3.5);
+    kline(K, `rgba(${soft},.65)`, [`K${i} (sin especie ${nj})`, `= ${fmt(K)}`]);
+    kline(Ke, col, [`K${i} − ${cs}N${j}`, `= ${fmt(K)} − ${fmt(c, 2)}·${fmt(Nf)}`, `= ${fmt(Ke, 1)}`]);
     ctx.font = '600 14px system-ui, sans-serif';
-    textBox(ctx, `con N₂ = ${fmt(N2f)} individuos de la especie 2,`, X(5.5), Y(Ke) + 26, C1, 'center');
-    textBox(ctx, `que pesan como αN₂ = ${fmt(a * N2f, 1)} de la especie 1`, X(5.5), Y(Ke) + 48, C1, 'center');
+    textBox(ctx, `con N${j} = ${fmt(Nf)} individuos de la especie ${nj},`, X(5.5), Y(Ke) + 26, col, 'center');
+    textBox(ctx, `que pesan como ${cs}N${j} = ${fmt(c * Nf, 1)} de la especie ${ni}`, X(5.5), Y(Ke) + 48, col, 'center');
   }
   ctx.fillStyle = MUTED; ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle'; ctx.fillText('0', L - 6, Y(0));
 }
@@ -913,8 +915,9 @@ function render() {
   $('bPrev').disabled = B.step === 0; $('bNext').disabled = B.step === n - 1;
   [...$('bDots').children].forEach((d, k) => { d.className = k === B.step ? 'on' : k < B.step ? 'past' : ''; });
   const go = $('bGoSim'); if (go) go.onclick = () => show('sim');
-  // K₂ y β no influyen en el dibujo hasta la isoclina de la especie 2 (paso 10)
-  SL.forEach(s => { if (s.k === 'K2' || s.k === 'b') s.el.hidden = B.step < 9; });
+  // K₁ y α mueven el dibujo salvo en el paso de la especie 2 sola; K₂ y β, en ese paso y desde su isoclina (paso 9)
+  const f2 = flags(st).log2;
+  SL.forEach(s => { s.el.hidden = (s.k === 'K2' || s.k === 'b') ? !(f2 || B.step >= 8) : f2; });
   draw();
 }
 function draw() {

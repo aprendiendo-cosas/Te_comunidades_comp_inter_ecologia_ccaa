@@ -60,6 +60,7 @@
   .box.b1{border-color:var(--c1)} .box.b2{border-color:var(--c2)}
   .tag{font-size:.82rem;color:var(--muted);font-style:italic}
   .expl{font-size:1rem;margin:.2rem 0}
+  .def{margin:.5rem 0;padding:.45rem .65rem;border-radius:6px;background:#f3f4f6;font-size:.95rem}
   .expl ul{margin:.4rem 0 .1rem;padding-left:1.2rem} .expl li{margin:.2rem 0}
   .fold{margin:0 0 .5rem}
   .folded #bPz, .folded #bExpl, .folded #bNote{display:none}
@@ -74,7 +75,7 @@
   .read div{margin:.15rem 0}
 
   /* ---- Pestaña 2: simulador ---- */
-  #viewSim{display:grid;grid-template-columns:270px minmax(0,1.15fr) minmax(0,1fr);gap:.8rem;padding:.8rem}
+  #viewSim{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) 270px;gap:.8rem;padding:.8rem}
   #slope{height:340px}
   #phase{aspect-ratio:1/1;max-height:56vh;cursor:crosshair}
   #time{height:190px}
@@ -87,7 +88,7 @@
   .result small{display:block;font-weight:400;margin-top:.2rem}
   .toggles{display:flex;flex-wrap:wrap;gap:.25rem .9rem;font-size:.85rem;margin-top:.4rem}
 
-  @media (max-width:1150px){ #viewSim{grid-template-columns:260px minmax(0,1fr)} #colPlots{grid-column:1 / -1} }
+  @media (max-width:1150px){ #viewSim{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} #colCtrls{grid-column:1 / -1} }
   @media (max-width:900px){ #viewBuild{grid-template-columns:minmax(0,1fr)} }
   @media (max-width:760px){ #viewSim,#viewBuild{grid-template-columns:minmax(0,1fr);padding:.6rem 16px} header{padding:.6rem 16px} #slope{height:300px} }
 </style>
@@ -140,46 +141,7 @@
 
 <!-- Pestaña 2: simulador -->
 <main id="viewSim" hidden>
-  <!-- Columna 1: controles -->
-  <div class="col">
-    <section class="card">
-      <h2>La ladera</h2>
-      <p class="note" style="margin-top:0">Cada número es cuántos conejos puede alimentar esa parte de la ladera.</p>
-      <div id="sliders"></div>
-      <div class="derived" id="derived"></div>
-      <p class="note"><span class="sp1">α</span>: cuánto frena un conejo blanco al marrón, contado en conejos marrones. <span class="sp2">β</span>: cuánto frena un conejo marrón al blanco, contado en conejos blancos. Si valen menos de 1, cada conejo frena a los de su especie más que a los de la otra.</p>
-    </section>
-    <section class="card">
-      <h2>Simulación</h2>
-      <div class="row">
-        <button id="play">▶ Reproducir</button>
-        <button id="reset">↺ Inicio</button>
-        <button id="clear">Borrar trayectorias</button>
-      </div>
-      <div class="slider"><label>Velocidad <output id="speedOut"></output></label>
-        <input type="range" id="speed" min="0.5" max="15" step="0.5" value="4"></div>
-      <div class="status" id="status"></div>
-      <p class="note">Haz clic en el plano de fases para elegir cuántos conejos de cada especie hay al principio.</p>
-      <p class="note">r₁ = r₂ = 1. La tasa de crecimiento cambia la velocidad, no el resultado.</p>
-    </section>
-  </div>
-
-  <!-- Columna 2: la ladera -->
-  <div class="col">
-    <section class="card">
-      <h2>La ladera <small>· el nicho de cada conejo</small></h2>
-      <canvas id="slope"></canvas>
-      <div class="legend"><span>Cada conejo dibujado es un individuo.</span>
-        <span><span class="sp1">Conejo marrón</span> = especie 1 · <span class="sp2">conejo blanco</span> = especie 2</span></div>
-      <div class="niche" id="niche"></div>
-    </section>
-    <section class="card">
-      <h2>Resultado</h2>
-      <div class="result" id="result" style="margin-top:0"></div>
-    </section>
-  </div>
-
-  <!-- Columna 3: isoclinas y tiempo -->
+  <!-- Columna 1: isoclinas y tiempo -->
   <div class="col" id="colPlots">
     <section class="card">
       <h2>Plano de fases <small>· isoclinas de crecimiento cero</small></h2>
@@ -200,6 +162,45 @@
       <canvas id="time"></canvas>
     </section>
   </div>
+
+  <!-- Columna 2: la ladera -->
+  <div class="col">
+    <section class="card">
+      <h2 id="landTitle">La ladera <small>· el nicho de cada conejo</small></h2>
+      <canvas id="slope"></canvas>
+      <div class="legend"><span>Cada conejo dibujado es un individuo.</span>
+        <span><span class="sp1">Conejo marrón</span> = especie 1 · <span class="sp2">conejo blanco</span> = especie 2</span></div>
+      <div class="niche" id="niche"></div>
+    </section>
+    <section class="card">
+      <h2>Resultado</h2>
+      <div class="result" id="result" style="margin-top:0"></div>
+    </section>
+  </div>
+
+  <!-- Columna 3: controles -->
+  <div class="col" id="colCtrls">
+    <section class="card">
+      <h2 id="ctrlTitle">La ladera</h2>
+      <p class="note" style="margin-top:0" id="ctrlIntro"></p>
+      <div id="sliders"></div>
+      <div class="derived" id="derived"></div>
+      <p class="note" id="ctrlNote"></p>
+    </section>
+    <section class="card">
+      <h2>Simulación</h2>
+      <div class="row">
+        <button id="play">▶ Reproducir</button>
+        <button id="reset">↺ Inicio</button>
+        <button id="clear">Borrar trayectorias</button>
+      </div>
+      <div class="slider"><label>Velocidad <output id="speedOut"></output></label>
+        <input type="range" id="speed" min="0.5" max="15" step="0.5" value="4"></div>
+      <div class="status" id="status"></div>
+      <p class="note">Haz clic en el plano de fases para elegir cuántos conejos de cada especie hay al principio.</p>
+      <p class="note">r₁ = r₂ = 1. La tasa de crecimiento cambia la velocidad, no el resultado.</p>
+    </section>
+  </div>
 </main>
 
 <script>
@@ -214,17 +215,22 @@ const fmt = (x, d = 1) => (!isFinite(x) || Math.abs(x) > 1e6) ? '∞'
 /* ---------------- Estado ---------------- */
 // A: ladera baja (solo marrón) · G: ladera media (compartida) · V: ladera alta (solo blanco)
 // a, b: coeficientes de competencia α y β. Todo en «conejos que caben»: un conejo dibujado = un individuo.
-const S = {A: 25, G: 30, V: 25, a: 0.55, b: 0.55, r1: 1, r2: 1};
+// flat: pradera plana con un solo tipo de hierba (casos de exclusión); F1, F2: conejos que alimenta la pradera.
+const S = {flat: false, A: 25, G: 30, V: 25, a: 0.55, b: 0.55, F1: 60, F2: 40, r1: 1, r2: 1};
 let P = {};
 const sim = {N1: 10, N2: 10, t: 0, running: false, done: false, traj: [], past: [], start: {N1: 10, N2: 10}};
 
 const PRESETS = {
-  win1: {A: 30, G: 30, V: 0, a: 1, b: 0.6},
-  win2: {A: 0, G: 30, V: 30, a: 0.6, b: 1},
-  unst: {A: 5, G: 40, V: 5, a: 1.35, b: 1.35},
-  coex: {A: 25, G: 30, V: 25, a: 0.55, b: 0.55},
+  win1: {flat: true, F1: 60, F2: 40},
+  win2: {flat: true, F1: 40, F2: 60},
+  unst: {flat: false, A: 5, G: 40, V: 5, a: 1.35, b: 1.35},
+  coex: {flat: false, A: 25, G: 30, V: 25, a: 0.55, b: 0.55},
 };
-const SLIDERS = [
+const SLIDERS_FLAT = [
+  {k: 'F1', label: '<span class="sp1">Conejos marrones</span> que alimenta la pradera', min: 10, max: 100, step: 5, d: 0},
+  {k: 'F2', label: '<span class="sp2">Conejos blancos</span> que alimenta la pradera', min: 10, max: 100, step: 5, d: 0},
+];
+const SLIDERS_SLOPE = [
   {k: 'A', label: '<span class="sp1">Ladera baja</span> (hierba alta): solo el marrón', min: 0, max: 50, step: 5, d: 0},
   {k: 'G', label: '<b>Ladera media</b>: la usan los dos', min: 0, max: 50, step: 5, d: 0},
   {k: 'V', label: '<span class="sp2">Ladera alta</span> (hierba corta): solo el blanco', min: 0, max: 50, step: 5, d: 0},
@@ -232,9 +238,11 @@ const SLIDERS = [
   {k: 'b', label: '<span class="sp2">β</span>: efecto del conejo marrón sobre el blanco', min: 0.2, max: 2, step: 0.05, d: 2, unit: ''},
 ];
 
+let SLIDERS = SLIDERS_SLOPE;
 function derive() {
+  if (S.flat) { P = {flat: true, A: 0, G: 0, V: 0, K1: S.F1, K2: S.F2, a: 1, b: 1}; return; }
   const K1 = S.A + S.G, K2 = S.G + S.V;
-  P = {A: S.A, G: S.G, V: S.V, K1, K2, a: S.a, b: S.b};
+  P = {flat: false, A: S.A, G: S.G, V: S.V, K1, K2, a: S.a, b: S.b};
 }
 
 /* ---------------- Modelo ---------------- */
@@ -271,7 +279,15 @@ function verdict() {
 
 /* ---------------- Controles ---------------- */
 function renderSliders() {
+  SLIDERS = S.flat ? SLIDERS_FLAT : SLIDERS_SLOPE;
   const box = $('sliders'); box.innerHTML = '';
+  $('ctrlTitle').textContent = S.flat ? 'La pradera' : 'La ladera';
+  $('landTitle').innerHTML = S.flat ? 'La pradera <small>· plana, con la misma hierba en todas partes</small>' : 'La ladera <small>· el nicho de cada conejo</small>';
+  $('ctrlIntro').textContent = S.flat ? 'Cada número es cuántos conejos de esa especie, ellos solos, puede alimentar la pradera.'
+    : 'Cada número es cuántos conejos puede alimentar esa parte de la ladera.';
+  $('ctrlNote').innerHTML = S.flat
+    ? 'Toda la pradera tiene la misma hierba y los dos conejos se mezclan por toda ella. Un conejo come lo mismo sea marrón o blanco, así que <span class="sp1">α</span> = <span class="sp2">β</span> = 1. Lo que cambia es cuánta hierba necesita cada especie para mantenerse: gana la que se apaña con menos, que es la de mayor K. Con un solo recurso compartido no hay coexistencia posible: es la exclusión competitiva.'
+    : '<span class="sp1">α</span>: cuánto frena un conejo blanco al marrón, contado en conejos marrones. <span class="sp2">β</span>: cuánto frena un conejo marrón al blanco, contado en conejos blancos. Si valen menos de 1, cada conejo frena a los de su especie más que a los de la otra.';
   for (const s of SLIDERS) {
     const w = document.createElement('div'); w.className = 'slider';
     w.innerHTML = `<label><span>${s.label}</span><output></output></label>
@@ -280,8 +296,10 @@ function renderSliders() {
     s.inp = inp; s.out = out;
     inp.addEventListener('input', () => {
       S[s.k] = +inp.value;
-      if (S.A + S.G < 5) S.A = 5 - S.G;     // que ninguna especie se quede sin sitio
-      if (S.V + S.G < 5) S.V = 5 - S.G;
+      if (!S.flat) {                         // que ninguna especie se quede sin sitio
+        if (S.A + S.G < 5) S.A = 5 - S.G;
+        if (S.V + S.G < 5) S.V = 5 - S.G;
+      }
       syncSliders(); onParams();
     });
     box.appendChild(w);
@@ -296,6 +314,11 @@ function syncSliders() {
 }
 function renderDerived() {
   const {K1, K2, a, b, A, G, V} = P;
+  if (P.flat) {
+    $('derived').innerHTML = `<div><span class="sp1">K₁</span> = <b>${fmt(K1,0)}</b> &nbsp; <span class="sp2">K₂</span> = <b>${fmt(K2,0)}</b></div>
+      <div><span class="sp1">α</span> = <span class="sp2">β</span> = <b>1</b> (la misma hierba)</div>`;
+    return;
+  }
   $('derived').innerHTML = `<div><span class="sp1">K₁</span> = ${fmt(A,0)} + ${fmt(G,0)} = <b>${fmt(K1,0)}</b> &nbsp; <span class="sp2">K₂</span> = ${fmt(G,0)} + ${fmt(V,0)} = <b>${fmt(K2,0)}</b></div>
     <div><span class="sp1">α</span> = <b>${fmt(a,2)}</b> &nbsp; <span class="sp2">β</span> = <b>${fmt(b,2)}</b></div>`;
 }
@@ -423,8 +446,48 @@ function slopeBackground(w, h, dpr, g) {
   bgCache = {key, cv};
   return cv;
 }
+function drawFlat(ctx, w, h) {
+  const {K1, K2} = P, top = 70, bottom = 64, xs = 8, usedW = w - 16, yG = top, Hb = h - top - bottom;
+  ctx.fillStyle = '#eef6fc'; ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#e9dfc8'; ctx.fillRect(0, yG - 2, w, h - yG + 2);
+  ctx.fillStyle = 'rgba(17,24,39,.03)'; ctx.fillRect(xs, yG, usedW, Hb);
+  // la misma hierba en todas partes
+  const gs = Math.max(9, Math.min(15, usedW / 75)), rows = Math.max(1, Math.floor(Hb / gs));
+  ctx.lineCap = 'round'; ctx.strokeStyle = '#6a9f3e'; ctx.lineWidth = Math.max(1.1, gs * 0.11);
+  for (let r = 0; r < rows; r++) for (let x = xs + gs * (r % 2 ? 0.5 : 0.1); x < xs + usedW; x += gs) {
+    const yb = yG + (r + 0.9) * gs, hg = gs * 1.2;
+    for (const k of [-1, 0, 1]) {
+      ctx.beginPath(); ctx.moveTo(x + k * gs * 0.12, yb);
+      ctx.quadraticCurveTo(x + k * gs * 0.15, yb - hg * 0.6, x + k * gs * 0.3, yb - hg * (k ? 0.8 : 1)); ctx.stroke();
+    }
+  }
+  // conejos mezclados por toda la pradera
+  const s = Math.max(11, Math.min(30, Math.sqrt(usedW * Hb / (1.6 * Math.max(K1 + K2, 20)))));
+  const list = [], n1 = Math.round(sim.N1), n2 = Math.round(sim.N2);
+  // secuencia R2: reparto uniforme sin bandas; las dos especies, intercaladas
+  for (let k = 0; k < n1; k++) list.push({u: frac(0.5 + 2 * k * 0.7548776662), v: frac(0.5 + 2 * k * 0.5698402910), sp: 1});
+  for (let k = 0; k < n2; k++) list.push({u: frac(0.5 + (2 * k + 1) * 0.7548776662), v: frac(0.5 + (2 * k + 1) * 0.5698402910), sp: 2});
+  for (const r of list) { r.x = xs + s * 0.4 + r.u * (usedW - s * 0.8); r.y = yG + s * 0.8 + r.v * Math.max(0, Hb - s * 0.9); }
+  list.sort((p, q) => p.y - q.y).forEach(r => rabbit(ctx, r.x, r.y, s, r.sp));
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillStyle = INK;
+  ctx.font = '700 13px system-ui, sans-serif'; ctx.fillText('Pradera plana · la misma hierba en todas partes', w / 2, yG - 30);
+  ctx.font = '13px system-ui, sans-serif'; ctx.fillText('los dos conejos comen lo mismo y se mezclan', w / 2, yG - 14);
+  const brace = (y, color, text) => {
+    const x0 = xs + 1, x1 = xs + usedW - 1, xm = (x0 + x1) / 2;
+    ctx.font = '600 13px system-ui, sans-serif';
+    const tw = Math.min(ctx.measureText(text).width, x1 - x0 - 16);
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x0, y - 6); ctx.lineTo(x0, y); ctx.lineTo(xm - tw / 2 - 6, y);
+    ctx.moveTo(xm + tw / 2 + 6, y); ctx.lineTo(x1, y); ctx.lineTo(x1, y - 6); ctx.stroke();
+    ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(text, xm, y, x1 - x0 - 16);
+  };
+  brace(h - 42, C1, `nicho del conejo marrón: toda la pradera · caben K₁ = ${fmt(K1, 0)}`);
+  brace(h - 16, C2, `nicho del conejo blanco: toda la pradera · caben K₂ = ${fmt(K2, 0)}`);
+}
 function drawSlope() {
   const {ctx, w, h, dpr} = prep($('slope'));
+  if (P.flat) { if (w >= 60) drawFlat(ctx, w, h); return; }
   const {A, G, V, K1, K2} = P;
   if (A + G + V <= 0 || w < 60) return;
   const g = slopeGeom(w, h), {xs, usedW, Hb, yT, yB, xu, total} = g;
@@ -487,6 +550,12 @@ function renderNiche() {
 function renderVerdict() {
   const {K1, K2, a, b} = P, v = verdict();
   let r;
+  if (P.flat) {
+    if (K1 > K2) r = `Gana el conejo marrón (especie 1): excluye al blanco.<small>Los dos comen la misma hierba, pero el marrón se apaña con menos (K₁ = ${fmt(K1,0)} &gt; K₂ = ${fmt(K2,0)}). Las isoclinas son paralelas y la del marrón queda por encima: con un solo recurso compartido no hay coexistencia.</small>`;
+    else if (K2 > K1) r = `Gana el conejo blanco (especie 2): excluye al marrón.<small>Los dos comen la misma hierba, pero el blanco se apaña con menos (K₂ = ${fmt(K2,0)} &gt; K₁ = ${fmt(K1,0)}). Las isoclinas son paralelas y la del blanco queda por encima: con un solo recurso compartido no hay coexistencia.</small>`;
+    else r = `Empate: las dos isoclinas coinciden.<small>Con la misma hierba y la misma K, los dos conejos son idénticos para el modelo: ninguno excluye al otro y el sistema se queda donde llegue a la línea. Basta una pequeña diferencia de K para que uno gane.</small>`;
+    $('result').innerHTML = r; return;
+  }
   if (v.in1 && v.in2) {
     const det = 1 - a * b, x = (K1 - a * K2) / det, y = (K2 - b * K1) / det;
     r = `Coexistencia estable (N₁ ≈ ${fmt(x)}, N₂ ≈ ${fmt(y)}).<small>Las isoclinas se cruzan y el cruce atrae al sistema: cada especie se frena más a sí misma que a la otra.</small>`;
@@ -614,7 +683,7 @@ function drawAll() {
 /* ---------------- Eventos ---------------- */
 document.querySelectorAll('[data-preset]').forEach(bt => bt.onclick = () => {
   Object.assign(S, PRESETS[bt.dataset.preset]);
-  syncSliders(); derive();
+  renderSliders(); derive();
   setRunning(false); sim.past = [];
   setStart(Math.round(0.2 * P.K1) || 3, Math.round(0.2 * P.K2) || 3, false);
   renderDerived(); drawAll();
@@ -681,13 +750,15 @@ const STEPS = [
   {f: 'log0', t: 'Partimos de la competencia dentro de una especie',
    x: 'La ecuación logística: la población crece mientras N es menor que K y se frena al acercarse a K. La especie compite consigo misma: es competencia <b>intraespecífica</b>.'},
   {f: 'log1', t: 'Añadimos la otra especie',
-   x: 'Para la especie 1, los individuos de la especie 2 también consumen recursos. Restamos αN₂: es la competencia <b>interespecífica</b>. α es lo que vale un individuo de la especie 2 contado en individuos de la especie 1, así que αN₂ son los N₂ rivales traducidos a individuos de la especie 1. Por eso se pueden restar de K₁. En la gráfica, si hay individuos de la especie 2, la especie 1 se estanca antes: en K₁ − αN₂.'
+   x: '<p class="def"><b>α, coeficiente de competencia</b>: mide cuánto se solapan los nichos de las dos especies, visto desde la especie 1. Es la parte de lo que usa un individuo de la especie 2 que se lo quita a la especie 1. Si no comparten nada, α = 0; cuanto más comparten, más se acerca a 1. Un α mayor que 1 ya no se explica solo por compartir recursos: indica interferencia (agresión, territorialidad).</p>'
+    + 'Para la especie 1, los individuos de la especie 2 también consumen recursos. Restamos αN₂: es la competencia <b>interespecífica</b>. α es lo que vale un individuo de la especie 2 contado en individuos de la especie 1, así que αN₂ son los N₂ rivales traducidos a individuos de la especie 1. Por eso se pueden restar de K₁. En la gráfica, si hay individuos de la especie 2, la especie 1 se estanca antes: en K₁ − αN₂.'
     + '<ul><li><b>α &lt; 1</b>: un individuo de la especie 2 frena a la especie 1 menos que uno propio. Pesa más la competencia dentro de la especie que con la otra.</li>'
     + '<li><b>α = 1</b>: frena lo mismo que uno propio. A la especie 1 le da igual de qué especie sea el vecino.</li>'
     + '<li><b>α &gt; 1</b>: frena más que uno propio. Pesa más la competencia con la otra especie que dentro de la propia.</li></ul>',
    n: 'Prueba a mover α en «Cambiar los números del ejemplo» y mira dónde se estanca la especie 1.'},
   {f: 'log2', t: 'La especie 2 también compite con la 1',
-   x: 'La especie 2 tiene su propia ecuación, con la misma forma. Ahora es la especie 1 la que le quita recursos: restamos βN₁. β es lo que vale un individuo de la especie 1 contado en individuos de la especie 2, así que βN₁ son los N₁ rivales traducidos a individuos de la especie 2. α y β no tienen por qué valer lo mismo: cada especie puede frenar a la otra con distinta fuerza.'
+   x: '<p class="def"><b>β, coeficiente de competencia</b>: el mismo solapamiento de nicho, visto desde la especie 2. Es la parte de lo que usa un individuo de la especie 1 que se lo quita a la especie 2. Aunque compartan la misma zona, β no tiene por qué valer lo mismo que α: si la especie 1 tiene un nicho más amplio, cada individuo suyo pasa menos tiempo en la zona compartida.</p>'
+    + 'La especie 2 tiene su propia ecuación, con la misma forma. Ahora es la especie 1 la que le quita recursos: restamos βN₁. β es lo que vale un individuo de la especie 1 contado en individuos de la especie 2, así que βN₁ son los N₁ rivales traducidos a individuos de la especie 2. α y β no tienen por qué valer lo mismo: cada especie puede frenar a la otra con distinta fuerza.'
     + '<ul><li><b>β &lt; 1</b>: un individuo de la especie 1 frena a la especie 2 menos que uno propio.</li>'
     + '<li><b>β = 1</b>: frena lo mismo que uno propio.</li>'
     + '<li><b>β &gt; 1</b>: frena más que uno propio.</li></ul>'

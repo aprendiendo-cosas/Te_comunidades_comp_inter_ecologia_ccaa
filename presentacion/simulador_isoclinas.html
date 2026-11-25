@@ -61,6 +61,8 @@
   .tag{font-size:.82rem;color:var(--muted);font-style:italic}
   .expl{font-size:1rem;margin:.2rem 0}
   .expl ul{margin:.4rem 0 .1rem;padding-left:1.2rem} .expl li{margin:.2rem 0}
+  .fold{margin:0 0 .5rem}
+  .folded #bPz, .folded #bExpl, .folded #bNote{display:none}
   .stepnote{font-size:.92rem;color:var(--muted);margin:.55rem 0 0}
   .nav{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
   .dots{display:flex;flex-wrap:wrap;gap:5px}
@@ -110,6 +112,7 @@
   <div class="col">
     <section class="card">
       <h2 class="stepT" id="bTitle"></h2>
+      <button id="bFold" class="fold" hidden aria-expanded="true">▲ Plegar las ecuaciones</button>
       <div class="pz" id="bPz"></div>
       <div class="expl" id="bExpl"></div>
       <p class="stepnote" id="bNote"></p>
@@ -710,8 +713,7 @@ const STEPS = [
   {f: 'plane pt r1 r2 p1a p1b l1 z1 p2a p2b l2 z2', t: 'Las dos gráficas juntas',
    x: 'Superponemos las dos isoclinas en el mismo plano. En cada punto actúan a la vez las dos especies: la 1 empuja en horizontal y la 2, en vertical.'},
   {f: 'plane pt r1 r2 p1a p1b l1 z1 p2a p2b l2 z2 comb', t: 'Sumamos las flechas',
-   x: 'En cada zona del plano, las dos flechas se combinan en una sola, que indica hacia dónde va el sistema desde allí. Qué pasa al final depende de cómo se sitúen las dos líneas. Hay cuatro posibilidades, y las vemos en el simulador.',
-   n: '<button id="bGoSim">Ir al simulador →</button>'},
+   x: 'En cada zona del plano, las dos flechas se combinan en una sola, que indica hacia dónde va el sistema desde allí. Qué pasa al final depende de cómo se sitúen las dos líneas. Hay cuatro posibilidades, y las vemos en el simulador.'},
 ];
 const flags = st => Object.fromEntries(st.f.split(' ').map(k => [k, true]));
 
@@ -914,7 +916,10 @@ function render() {
   $('bNote').hidden = !st.n;
   $('bPrev').disabled = B.step === 0; $('bNext').disabled = B.step === n - 1;
   [...$('bDots').children].forEach((d, k) => { d.className = k === B.step ? 'on' : k < B.step ? 'past' : ''; });
-  const go = $('bGoSim'); if (go) go.onclick = () => show('sim');
+  // en el último paso se puede plegar el cuadro para dejar a la vista «Cambiar los números del ejemplo»
+  const lastStep = B.step === n - 1;
+  $('bFold').hidden = !lastStep;
+  if (!lastStep) setFold(false);
   // K₁ y α mueven el dibujo salvo en el paso de la especie 2 sola; K₂ y β, en ese paso y desde su isoclina (paso 9)
   const f2 = flags(st).log2;
   SL.forEach(s => { s.el.hidden = (s.k === 'K2' || s.k === 'b') ? !(f2 || B.step >= 8) : f2; });
@@ -927,6 +932,12 @@ function draw() {
   readout(f);
   $('bcv').style.cursor = f.plane ? 'crosshair' : 'default';
 }
+function setFold(v) {
+  $('bTitle').parentElement.classList.toggle('folded', v);
+  $('bFold').textContent = v ? '▼ Mostrar las ecuaciones' : '▲ Plegar las ecuaciones';
+  $('bFold').setAttribute('aria-expanded', String(!v));
+}
+$('bFold').onclick = () => setFold(!$('bTitle').parentElement.classList.contains('folded'));
 const goto = k => { B.step = Math.max(0, Math.min(STEPS.length - 1, k)); render(); };
 
 /* ---------------- Controles ---------------- */

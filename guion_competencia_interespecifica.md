@@ -22,6 +22,12 @@ En esta guía se describen dos sesiones de una hora cada una. Tiene los siguient
 + Entender cómo interactúan los dos tipos de competencia que conocemos: la intraespecífica y la interespecífica. 
 
 
+
+El siguiente texto es el resultado de reestructurar la transcripción de los audios de las clases impartidas sobre este asunto. La reestructuración se ha hecho usando una IA y revisando los contenidos a mano.
+
+
+
+
 ## 2. Introducción: de la depredación a la competencia
 
 La competencia interespecífica se modeliza como una competencia intraespecífica ampliada: los individuos de la otra especie se convierten en individuos equivalentes de la propia. Antes de desarrollar esta idea, conviene situarla respecto a la interacción estudiada en el capítulo anterior, la depredación.
@@ -30,9 +36,9 @@ En la depredación, los tamaños poblacionales de depredadores y presas se acopl
 
 Las ecuaciones de Lotka-Volterra para la depredación no contemplan la competencia intraespecífica. La población de presas (N) crece de forma exponencial, a una tasa r, y a ese crecimiento se le resta el efecto del depredador (P), que depende de su capacidad para capturar presas (a). El depredador actúa, por tanto, sobre la mortalidad de la presa. La presa, en cambio, incide en el depredador por el lado de los nacimientos: cuantas más presas hay, más nacimientos de depredadores se producen (b es la eficiencia con la que las presas consumidas se convierten en nuevos depredadores y m su tasa de mortalidad).
 
-```latex
+$$
 \frac{dN}{dt} = rN - aNP \qquad \frac{dP}{dt} = b\,aNP - mP
-```
+$$
 
 El modelo de competencia que se desarrolla a continuación tiene una estructura distinta. No parte de un crecimiento exponencial, sino del crecimiento logístico, en el que la competencia intraespecífica ya está incorporada.
 
@@ -40,15 +46,21 @@ La **competencia interespecífica** es la interacción que se produce cuando ind
 
 Esta interacción no debe confundirse con la depredación, porque ninguna de las especies consume a la otra. Una especie perjudica a la otra porque le resta alimento o espacio, o porque la agrede y le impide alimentarse. Es lo que ocurre, por ejemplo, entre conejos y liebres que comparten un mismo pastizal. Por esta razón, la competencia interespecífica se parece mucho a la intraespecífica: en ambos casos, el crecimiento de una población se frena porque hay más individuos que reclaman los mismos recursos.
 
+
+
+Para comprender bien este tema, es útil usar [este](https://raw.githack.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/presentacion/simulador_isoclinas.html) simulador que usamos en clase como guía de la presentación.  
+
+
+
 ## 3. El modelo de Lotka-Volterra para la competencia
 
 El modelo de competencia interespecífica añade a la ecuación logística un único término: el efecto de la otra especie, expresado en individuos equivalentes de la propia.
 
 El crecimiento logístico describe una población sometida a competencia intraespecífica. Al principio, el crecimiento se asemeja a una exponencial. A medida que el número de individuos (N) se acerca a la capacidad de carga (K), el crecimiento se frena y la población tiende a una asíntota en torno a ese valor, que en teoría nunca llega a alcanzar.
 
-```latex
+$$
 \frac{dN}{dt} = rN\,\frac{K - N}{K}
-```
+$$
 
 El cociente (K − N)/K actúa como un freno que se pisa con más fuerza cuanto mayor es la población. Cuando N es muy pequeño, K − N se parece mucho a K, el cociente vale casi 1 y el crecimiento es prácticamente exponencial. Cuando N se acerca a K, K − N tiende a cero y la velocidad de crecimiento se anula.
 
@@ -58,9 +70,9 @@ Un ejemplo hipotético ayuda a entender la idea. Supongamos que un *Tyrannosauru
 
 Este conversor se incorpora a la ecuación logística de la especie 1 mediante el término α·N₂:
 
-```latex
+$$
 \frac{dN_1}{dt} = r_1 N_1\,\frac{K_1 - N_1 - \alpha N_2}{K_1}
-```
+$$
 
 El **coeficiente de competencia interespecífica** (α) mide el efecto de un individuo de la especie 2 sobre el crecimiento de la especie 1, expresado en individuos equivalentes de la especie 1. Al multiplicarlo por N₂, el número de individuos de la especie 2, obtenemos el peso total de la especie 2 sobre la especie 1. Como este término se resta en el numerador, cuanto mayores sean α o N₂, antes se alcanza el freno del crecimiento.
 
@@ -76,9 +88,9 @@ Si aumentamos el efecto de la especie 2 sobre la especie 1 (es decir, si aumenta
 
 La especie 2 experimenta lo mismo. Su ecuación incorpora el coeficiente β, que mide el efecto de un individuo de la especie 1 sobre el crecimiento de la especie 2, multiplicado por N₁:
 
-```latex
+$$
 \frac{dN_2}{dt} = r_2 N_2\,\frac{K_2 - N_2 - \beta N_1}{K_2}
-```
+$$
 
 Las dos ecuaciones forman un sistema acoplado: el crecimiento de cada especie depende de su propia abundancia y de la abundancia de la otra.
 
@@ -133,9 +145,9 @@ Para analizar la interacción representamos un plano con el número de individuo
 
 Buscamos primero las combinaciones de abundancias para las que la especie 1 no crece, es decir, aquellas en las que dN₁/dt = 0. Esto ocurre cuando se anula el numerador del cociente:
 
-```latex
+$$
 K_1 - N_1 - \alpha N_2 = 0 \quad\Longrightarrow\quad N_1 = K_1 - \alpha N_2
-```
+$$
 
 Es la ecuación de una recta, del tipo y = ax + b, cuyas constantes son K₁ y α. Para dibujarla basta con hallar sus dos cortes con los ejes:
 
@@ -164,9 +176,9 @@ Conviene subrayar que este diagrama todavía no incluye el tiempo. Solo muestra 
 
 El procedimiento para la especie 2 es idéntico. Al anular su velocidad de crecimiento se obtiene otra recta:
 
-```latex
+$$
 K_2 - N_2 - \beta N_1 = 0 \quad\Longrightarrow\quad N_2 = K_2 - \beta N_1
-```
+$$
 
 Sus cortes con los ejes son (0, K₂) y (K₂/β, 0). Por debajo de esta isoclina, todas las combinaciones de abundancias de las dos especies implican que la especie 2 crece; por encima, que decrece.
 
@@ -224,9 +236,9 @@ La coexistencia requiere que los nichos no se solapen al 100 %. Para simularlo, 
 
 En esta situación, las isoclinas se cruzan de modo que cada una corta el eje de su propia especie por debajo del corte de la otra isoclina. La razón es que, en la zona de solapamiento, lo que más limita a cada especie no son los individuos de la otra, sino los de la suya. Dicho de otra forma, la competencia intraespecífica pesa más que la interespecífica. Formalmente, la coexistencia estable exige que se cumplan a la vez:
 
-```latex
+$$
 \alpha < \frac{K_1}{K_2} \qquad \text{y} \qquad \beta < \frac{K_2}{K_1}
-```
+$$
 
 ![Coexistencia](https://raw.githubusercontent.com/aprendiendo-cosas/Te_comunidades_comp_inter_ecologia_ccaa/main/imagenes/fig6_coexistencia.svg)
 
